@@ -35,8 +35,21 @@ public class HandLandmarkSolver : MonoBehaviour
     private HandLandmarkerResult _detectedLandmarks = default;
     private ConversionParams? conversionParams;
 
+    ///
+    private JitterFilter _filter = new JitterFilter(0.6f);
+    private DepthModifier _depthModifier;
+    ///
+
+
+
+
     private void Start()
     {
+        ///
+        _depthModifier = new DepthModifier(arCamera, 0.5f);
+        ///
+
+
         restTime = 1 / targetFps;
 
         handLandmarker = HandLandmarker.CreateFromOptions(new HandLandmarkerOptions(
@@ -65,6 +78,7 @@ public class HandLandmarkSolver : MonoBehaviour
         IsReady = true;
     }
 
+    Vector3[] proxy;
     private void GenerateLandmarks()
     {
         if (manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage))
@@ -73,16 +87,21 @@ public class HandLandmarkSolver : MonoBehaviour
             {
                 List<Vector3> landmarkVectors = new();
 
+
                 for (int i = 0; i < _detectedLandmarks.handLandmarks[0].landmarks.Count; i++)
                 {
-                    Vector3 screenPoint = new Vector3(_detectedLandmarks.handLandmarks[0].landmarks[i].x * Screen.width, 
-                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].y * Screen.height,
-                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].z + 0.5f); 
+                    Vector3 screenPoint = new Vector3(_detectedLandmarks.handLandmarks[0].landmarks[i].x, 
+                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].y,
+                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].z); 
 
-                    landmarkVectors.Add(arCamera.ScreenToWorldPoint(screenPoint));
+                    landmarkVectors.Add(screenPoint);
                 }
+    
+                Vector3[] filteredData = _filter.Filter(landmarkVectors.ToArray());
+                proxy = filteredData;
+                Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
 
-                handVisualizer.SendNewLandMarks(landmarkVectors.ToArray());
+                handVisualizer.SendNewLandMarks(finalPoints);
 
                 UnityEngine.Debug.Log("Landmarks placed in world space");
             }
@@ -134,4 +153,10 @@ public class HandLandmarkSolver : MonoBehaviour
 
         return texture;
     }
+
+    public void Calibrate()
+    {
+        _depthModifier.Calibrate(proxy);
+    }
+
 }
