@@ -1,4 +1,7 @@
-﻿using Mediapipe.Tasks.Vision.HandLandmarker;
+﻿using Mediapipe.Tasks.Vision.Core;
+using Mediapipe.Tasks.Vision.FaceLandmarker;
+using Mediapipe.Tasks.Vision.HandLandmarker;
+using Mediapipe.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +32,7 @@ public class HandLandmarkSolver : MonoBehaviour
     private HandLandmarker handLandmarker;
     
     private Stopwatch stopwatch = new Stopwatch();
-    private HandLandmarkerResult _detectedLandmarks;
+    private HandLandmarkerResult _detectedLandmarks = default;
     private ConversionParams? conversionParams;
 
     private void Start()
@@ -66,17 +69,15 @@ public class HandLandmarkSolver : MonoBehaviour
     {
         if (manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage))
         {
-            _detectedLandmarks = handLandmarker.DetectForVideo(new Mediapipe.Image(GetTexture2DFromCpuImage(cpuImage)), stopwatch.ElapsedMilliseconds);
-
-            if (_detectedLandmarks.handLandmarks?.Count > 0)
+            if (handLandmarker.TryDetectForVideo(new Mediapipe.Image(GetTexture2DFromCpuImage(cpuImage)), stopwatch.ElapsedMilliseconds, default(ImageProcessingOptions), result: ref _detectedLandmarks))
             {
                 List<Vector3> landmarkVectors = new();
 
                 for (int i = 0; i < _detectedLandmarks.handLandmarks[0].landmarks.Count; i++)
                 {
                     Vector3 screenPoint = new Vector3(_detectedLandmarks.handLandmarks[0].landmarks[i].x * Screen.width, 
-                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].y * Screen.height, 
-                                                      0.5f); 
+                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].y * Screen.height,
+                                                      _detectedLandmarks.handLandmarks[0].landmarks[i].z + 0.5f); 
 
                     landmarkVectors.Add(arCamera.ScreenToWorldPoint(screenPoint));
                 }
@@ -94,7 +95,7 @@ public class HandLandmarkSolver : MonoBehaviour
         {
             UnityEngine.Debug.Log("No image");
         }
-    }
+    }   
 
 
     private Texture2D GetTexture2DFromCpuImage(XRCpuImage cpuImage)
