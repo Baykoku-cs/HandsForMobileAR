@@ -24,7 +24,6 @@ public class HandVisualizer : MonoBehaviour
             spheres[i].transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         }
     }
-
     private void FixedUpdate()
     {
         if (isRecentlyUpdated)

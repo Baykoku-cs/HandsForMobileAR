@@ -1,7 +1,5 @@
 ﻿using Mediapipe.Tasks.Vision.Core;
-using Mediapipe.Tasks.Vision.FaceLandmarker;
 using Mediapipe.Tasks.Vision.HandLandmarker;
-using Mediapipe.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +8,6 @@ using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.XR.ARSubsystems.XRCpuImage;
 
 public class HandLandmarkSolver : MonoBehaviour
@@ -24,7 +21,6 @@ public class HandLandmarkSolver : MonoBehaviour
     
     [SerializeField]
     private int targetFps = 30;
-    private float restTime;
 
     [SerializeField]
     private HandVisualizer handVisualizer;
@@ -40,17 +36,11 @@ public class HandLandmarkSolver : MonoBehaviour
     private DepthModifier _depthModifier;
     ///
 
-
-
-
     private void Start()
     {
         ///
         _depthModifier = new DepthModifier(arCamera, 0.5f);
         ///
-
-
-        restTime = 1 / targetFps;
 
         handLandmarker = HandLandmarker.CreateFromOptions(new HandLandmarkerOptions(
             new Mediapipe.Tasks.Core.BaseOptions(delegateCase: Mediapipe.Tasks.Core.BaseOptions.Delegate.CPU, 
