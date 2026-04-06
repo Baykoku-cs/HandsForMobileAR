@@ -67,7 +67,7 @@ public class HandLandmarkSolver : MonoBehaviour
         if (IsReady)
         {
             GenerateLandmarks();
-            StartCoroutine(Rest(1 / targetFps));
+            StartCoroutine(Rest(1f / targetFps));
         }
     }
 
