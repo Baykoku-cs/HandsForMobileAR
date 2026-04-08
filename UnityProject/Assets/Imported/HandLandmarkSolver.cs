@@ -69,14 +69,15 @@ public class HandLandmarkSolver : MonoBehaviour
     }
 
     Vector3[] proxy;
+    List<Vector3> landmarkVectors = new();
     private void GenerateLandmarks()
     {
         if (manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage))
         {
-            if (handLandmarker.TryDetectForVideo(new Mediapipe.Image(GetTexture2DFromCpuImage(cpuImage)), stopwatch.ElapsedMilliseconds, default(ImageProcessingOptions), result: ref _detectedLandmarks))
+            var texture = GetTexture2DFromCpuImage(cpuImage);
+            if (handLandmarker.TryDetectForVideo(new Mediapipe.Image(texture), stopwatch.ElapsedMilliseconds, default(ImageProcessingOptions), result: ref _detectedLandmarks))
             {
-                List<Vector3> landmarkVectors = new();
-
+                landmarkVectors.Clear();
 
                 for (int i = 0; i < _detectedLandmarks.handLandmarks[0].landmarks.Count; i++)
                 {
@@ -99,13 +100,13 @@ public class HandLandmarkSolver : MonoBehaviour
             {
                 UnityEngine.Debug.Log("No hands detected");
             }
+            Destroy(texture);
         }
         else
         {
             UnityEngine.Debug.Log("No image");
         }
     }   
-
 
     private Texture2D GetTexture2DFromCpuImage(XRCpuImage cpuImage)
     {
