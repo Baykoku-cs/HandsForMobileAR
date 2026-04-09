@@ -7,7 +7,8 @@ public class VrMode : MonoBehaviour
     [SerializeField] private RawImage LeftEye;
     [SerializeField] private RawImage RightEye;
     [SerializeField] private bool TriggerSplitModeOn;
-    
+    [SerializeField, Range(-0.1f, 0.1f)] private float eyeStep;
+
     private float _cropPercentage = 0.25f;
     private bool IsSplitModeOn;
     private RenderTexture renderTexture;
@@ -16,6 +17,7 @@ public class VrMode : MonoBehaviour
     private void Start()
     {
         originalTargetTexture = CameraToSplit.targetTexture;
+
     }
 
     private void Update()
@@ -38,16 +40,12 @@ public class VrMode : MonoBehaviour
             EnableRenderTextureMode();
             var texture = renderTexture;
 
-            float textureAspect = (float)texture.width / texture.height;
-            float screenAspect = currentScreenRect.rect.width / currentScreenRect.rect.height;
-
-            float eyeWidth;
-
-            eyeWidth = currentScreenRect.rect.width * 0.5f;
+            float eyeWidth = currentScreenRect.rect.width * 0.5f;
 
             lEyeRect.sizeDelta = new Vector2(eyeWidth, lEyeRect.sizeDelta.y);
             rEyeRect.sizeDelta = new Vector2(eyeWidth, rEyeRect.sizeDelta.y);
 
+            LeftEye.material.mainTexture = texture;
             LeftEye.texture = texture;
             RightEye.texture = texture;
 
@@ -69,6 +67,9 @@ public class VrMode : MonoBehaviour
 
         originalTargetTexture = CameraToSplit.targetTexture;
         CameraToSplit.targetTexture = renderTexture;
+
+        LeftEye.uvRect = new Rect(0.25f - eyeStep, LeftEye.uvRect.y, LeftEye.uvRect.width, LeftEye.uvRect.height);
+        RightEye.uvRect = new Rect(0.25f + eyeStep, RightEye.uvRect.y, RightEye.uvRect.width, RightEye.uvRect.height);
     }
 
     private void DisableRenderTextureMode()
