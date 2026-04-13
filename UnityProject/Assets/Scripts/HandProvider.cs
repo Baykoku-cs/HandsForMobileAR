@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using static UnityEngine.XR.ARSubsystems.XRCpuImage;
@@ -36,6 +37,9 @@ public class HandProvider : MonoBehaviour
     private ConversionParams? _conversionParams;
     private (List<Vector3> landmarkVectors, long timestampMillisec) _lastRecognizerResult = (new List<Vector3>(), 0);
     private Stopwatch _stopwatch = new Stopwatch();
+
+    private string LastDetectedPose = "None";
+    public UnityEvent<string> OnPoseChanged;
 
     private void Awake()
     {
@@ -68,6 +72,12 @@ public class HandProvider : MonoBehaviour
                                               gestureRecognizerResult.handLandmarks[0].landmarks[i].z);
 
             _lastRecognizerResult.landmarkVectors.Add(screenPoint);
+        }
+
+        if (!LastDetectedPose.Equals(gestureRecognizerResult.gestures[0].categories[0].categoryName))
+        {
+            LastDetectedPose = gestureRecognizerResult.gestures[0].categories[0].categoryName;
+            OnPoseChanged?.Invoke(LastDetectedPose);
         }
 
         _areNewLandmarksReady = true;
@@ -125,10 +135,10 @@ public class HandProvider : MonoBehaviour
             };
         }
 
-        if (_textureToProcess is not null)
-            Destroy(_textureToProcess);
 
-        _textureToProcess = new Texture2D(cpuImage.width, cpuImage.height, TextureFormat.RGBA32, false);
+        // TODO: proparly manage memory. This way is cursed: sometimes rewrites texture that is processing by mediapipe. Results are unpredictable. Needs fix
+        if (_textureToProcess is null)
+            _textureToProcess = new Texture2D(cpuImage.width, cpuImage.height, TextureFormat.RGBA32, false);
         try
         {
             unsafe
