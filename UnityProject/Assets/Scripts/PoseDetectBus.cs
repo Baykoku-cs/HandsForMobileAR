@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PoseDetectBus : MonoBehaviour
 {
@@ -16,24 +18,67 @@ public class PoseDetectBus : MonoBehaviour
         for (int i = 0; i < poseCount; i++)
         {
             _poses[i] = new PoseState((PoseType)i);
-
-            _poses[i].OnPoseDetected += (sender, args) => Debug.Log($"DETECTED: {((PoseState)sender).Type}");
-            _poses[i].OnPoseLost += (sender, args) => Debug.Log($"LOST: {((PoseState)sender).Type}");
         }
     }
 
     private void OnEnable()
     {
         if (_handProvider != null)
-            _handProvider.OnPoseChanged.AddListener(HandlePoseChange);
+            _handProvider.OnPoseChanged += HandlePoseChange;
     }
 
     private void OnDisable()
     {
         if (_handProvider != null)
-            _handProvider.OnPoseChanged.RemoveListener(HandlePoseChange);
+            _handProvider.OnPoseChanged += HandlePoseChange;
+    }
+    
+    public void SubscribeOnPoseDetected(EventType eventType, PoseType poseType, UnityAction action)
+    {
+        switch (eventType)
+        {
+            case EventType.OnPoseDetectionStart:
+                _poses[(int)poseType].OnPoseDetectionStart += (s, e) => action();
+                break;
+
+            case EventType.OnPoseLost:
+                _poses[(int)poseType].OnPoseLost += (s, e) => action();
+                break;
+
+            case EventType.OnPoseDetected:
+                {
+                    _poses[(int)poseType].OnPoseDetected += (s, e) => action();
+                    break;
+                }
+
+            case EventType.OnPoseCanceled:
+                _poses[(int)poseType].OnPoseCanceled += (s, e) => action();
+                break;
+        }
     }
 
+    public void UnSubscribeOnPoseDetected(EventType eventType, PoseType poseType, Action action)
+    {
+        switch (eventType)
+        {
+            case EventType.OnPoseDetectionStart:
+                _poses[(int)poseType].OnPoseDetectionStart -= (s, e) => action();
+                break;
+
+            case EventType.OnPoseLost:
+                _poses[(int)poseType].OnPoseLost -= (s, e) => action();
+                break;
+
+            case EventType.OnPoseDetected:
+                _poses[(int)poseType].OnPoseDetected -= (s, e) => action();
+                break;
+
+            case EventType.OnPoseCanceled:
+                _poses[(int)poseType].OnPoseCanceled -= (s, e) => action();
+                break;
+        }
+    }
+    
     private void Update()
     {
         float dt = Time.deltaTime;
@@ -43,7 +88,7 @@ public class PoseDetectBus : MonoBehaviour
         }
     }
 
-    private void HandlePoseChange(string newPoseName)
+    private void HandlePoseChange(object sender, string newPoseName)
     {
         if (Enum.TryParse(newPoseName, out PoseType newPoseType))
         {
@@ -60,102 +105,9 @@ public class PoseDetectBus : MonoBehaviour
             Debug.LogWarning($"Unknown pose: {newPoseName}");
         }
     }
-}
 
-public enum PoseType
-{
-    None,
-    Closed_Fist,
-    Open_Palm,
-    Pointing_Up,
-    Thumb_Down,
-    Thumb_Up,
-    Victory,
-    ILoveYou
-}
-
-public class PoseState
-{
-    public PoseType Type { get; private set; }
-
-    public event EventHandler OnPoseDetectionStart;
-    public event EventHandler OnPoseDetected; 
-    public event EventHandler OnPoseCanceled; 
-    public event EventHandler OnPoseLost;      
-
-    public float TimeToDetectSeconds = 1f;
-    public float TimeToExpireSeconds = 0.3f;
-
-    private float _activateTimer;
-    private float _expireTimer;
-
-    public bool IsDetecting { get; private set; }
-    public bool IsDetected { get; private set; }
-    public bool IsPaused { get; private set; }
-
-    public PoseState(PoseType type)
+    public float GetPoseDetectTimerNormalized(PoseType poseType)
     {
-        Type = type;
-    }
-
-    public void Resume()
-    {
-        IsPaused = false;
-        _expireTimer = 0f;
-
-        if (!IsDetected && !IsDetecting)
-        {
-            IsDetecting = true;
-            OnPoseDetectionStart?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    public void Pause()
-    {
-        IsPaused = true;
-    }
-
-    public void Tick(float dt)
-    {
-        if (!IsDetecting && !IsDetected) return;
-
-        if (IsPaused)
-        {
-            _expireTimer += dt;
-            if (_expireTimer > TimeToExpireSeconds)
-            {
-                if (IsDetected)
-                {
-                    OnPoseLost?.Invoke(this, EventArgs.Empty);
-                }
-                else if (IsDetecting)
-                {
-                    OnPoseCanceled?.Invoke(this, EventArgs.Empty);
-                }
-                Reset();
-            }
-        }
-        else
-        {
-            if (IsDetecting && !IsDetected)
-            {
-                _activateTimer += dt;
-                if (_activateTimer > TimeToDetectSeconds)
-                {
-                    IsDetected = true;
-                    IsDetecting = false;
-                    OnPoseDetected?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-    }
-
-    private void Reset()
-    {
-        IsDetecting = false;
-        IsDetected = false;
-        IsPaused = false;
-        _activateTimer = 0f;
-        _expireTimer = 0f;
+        return _poses[(int)poseType].GetActivationTimerNormalized();
     }
 }

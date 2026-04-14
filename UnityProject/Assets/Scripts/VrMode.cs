@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class VrMode : MonoBehaviour
 {
     [SerializeField] private Camera CameraToSplit;
+    [SerializeField] private RawImage FullScreen;
     [SerializeField] private RawImage LeftEye;
     [SerializeField] private RawImage RightEye;
     [SerializeField] private bool TriggerSplitModeOn;
@@ -12,12 +13,22 @@ public class VrMode : MonoBehaviour
     private float _cropPercentage = 0.25f;
     private bool IsSplitModeOn;
     private RenderTexture renderTexture;
-    private RenderTexture originalTargetTexture;
 
     private void Start()
     {
-        originalTargetTexture = CameraToSplit.targetTexture;
+        Recount();
+        
+        FullScreen.texture = renderTexture;
+        FullScreen.enabled = true;
+    }
 
+    private void OnDestroy()
+    {
+        if (renderTexture != null)
+        {
+            renderTexture.Release();
+            renderTexture = null;
+        }
     }
 
     private void Update()
@@ -37,7 +48,7 @@ public class VrMode : MonoBehaviour
 
         if (currentMode)
         {
-            EnableRenderTextureMode();
+            Recount();
             var texture = renderTexture;
 
             float eyeWidth = currentScreenRect.rect.width * 0.5f;
@@ -45,42 +56,33 @@ public class VrMode : MonoBehaviour
             lEyeRect.sizeDelta = new Vector2(eyeWidth, lEyeRect.sizeDelta.y);
             rEyeRect.sizeDelta = new Vector2(eyeWidth, rEyeRect.sizeDelta.y);
 
-            LeftEye.material.mainTexture = texture;
             LeftEye.texture = texture;
             RightEye.texture = texture;
 
             LeftEye.enabled = true;
             RightEye.enabled = true;
-}
+            FullScreen.enabled = false;
+        }
         else
         {
-            DisableRenderTextureMode();
+            Recount();
+            FullScreen.texture = renderTexture;
+            FullScreen.enabled = true;
             LeftEye.enabled = false;
             RightEye.enabled = false;
         }
     }
 
 
-    private void EnableRenderTextureMode()
+    private void Recount()
     {
         renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
-
-        originalTargetTexture = CameraToSplit.targetTexture;
+        // should be cpuImage resolution, not screen
+        
         CameraToSplit.targetTexture = renderTexture;
 
         LeftEye.uvRect = new Rect(0.25f - eyeStep, LeftEye.uvRect.y, LeftEye.uvRect.width, LeftEye.uvRect.height);
         RightEye.uvRect = new Rect(0.25f + eyeStep, RightEye.uvRect.y, RightEye.uvRect.width, RightEye.uvRect.height);
-    }
-
-    private void DisableRenderTextureMode()
-    {
-        CameraToSplit.targetTexture = originalTargetTexture;
-
-        if (renderTexture != null)
-        {
-            renderTexture.Release();
-            renderTexture = null;
-        }
     }
 
     public void ChangeMode()

@@ -1,14 +1,14 @@
-﻿using Mediapipe;
-using Mediapipe.Tasks.Core;
+﻿using Mediapipe.Tasks.Core;
 using Mediapipe.Tasks.Vision.Core;
 using Mediapipe.Tasks.Vision.GestureRecognizer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using static UnityEngine.XR.ARSubsystems.XRCpuImage;
@@ -38,8 +38,12 @@ public class HandProvider : MonoBehaviour
     private (List<Vector3> landmarkVectors, long timestampMillisec) _lastRecognizerResult = (new List<Vector3>(), 0);
     private Stopwatch _stopwatch = new Stopwatch();
 
-    private string LastDetectedPose = "None";
-    public UnityEvent<string> OnPoseChanged;
+    private const string NONE_POSE_NAME = "None";
+    private string LastDetectedPose = NONE_POSE_NAME;
+    public event EventHandler<string> OnPoseChanged;
+
+    private string _poseTmp = NONE_POSE_NAME;
+    // To Do: get rid of this. Needs as buffer to remove all event into the main thread
 
     private void Awake()
     {
@@ -58,26 +62,28 @@ public class HandProvider : MonoBehaviour
         _stopwatch.Start();
     }
 
-    private void ProcessLandmarksCallback(GestureRecognizerResult gestureRecognizerResult, Image image, long timestampMillisec)
+    private void ProcessLandmarksCallback(GestureRecognizerResult gestureRecognizerResult, Mediapipe.Image image, long timestampMillisec)
     {
         if (gestureRecognizerResult.handLandmarks is null)
+        {
+            _poseTmp = NONE_POSE_NAME;
             return;
+        }
 
         _lastRecognizerResult.landmarkVectors.Clear();
         
         for (int i = 0; i < gestureRecognizerResult.handLandmarks[0].landmarks.Count; i++)
         {
             Vector3 screenPoint = new Vector3(gestureRecognizerResult.handLandmarks[0].landmarks[i].x,
-                                              gestureRecognizerResult.handLandmarks[0].landmarks[i].y,
+                                              1 - gestureRecognizerResult.handLandmarks[0].landmarks[i].y,
                                               gestureRecognizerResult.handLandmarks[0].landmarks[i].z);
 
             _lastRecognizerResult.landmarkVectors.Add(screenPoint);
         }
 
-        if (!LastDetectedPose.Equals(gestureRecognizerResult.gestures[0].categories[0].categoryName))
+        if (!_poseTmp.Equals(gestureRecognizerResult.gestures[0].categories[0].categoryName))
         {
-            LastDetectedPose = gestureRecognizerResult.gestures[0].categories[0].categoryName;
-            OnPoseChanged?.Invoke(LastDetectedPose);
+            _poseTmp = gestureRecognizerResult.gestures[0].categories[0].categoryName;
         }
 
         _areNewLandmarksReady = true;
@@ -93,6 +99,14 @@ public class HandProvider : MonoBehaviour
             Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
 
             handVisualizer.SendNewLandMarks(finalPoints);
+
+
+            if (!LastDetectedPose.Equals(_poseTmp))
+            {
+                LastDetectedPose = _poseTmp;
+                OnPoseChanged?.Invoke(this, LastDetectedPose);
+            }
+
 
             _areNewLandmarksReady = false;
         }
@@ -115,13 +129,13 @@ public class HandProvider : MonoBehaviour
         if (manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage))
         {
             GetTexture2DFromCpuImage(cpuImage);
-            _gestureRecognizer.RecognizeAsync(new Image(_textureToProcess), _stopwatch.ElapsedMilliseconds);
+            _gestureRecognizer.RecognizeAsync(new Mediapipe.Image(_textureToProcess), _stopwatch.ElapsedMilliseconds);
         }
     }
     
     private Texture2D GetTexture2DFromCpuImage(XRCpuImage cpuImage)
     {
-        if (_conversionParams is null)
+        if (_conversionParams is null || _conversionParams.Value.inputRect.width != cpuImage.width)
         {
             _conversionParams = new ConversionParams
             {
@@ -131,14 +145,15 @@ public class HandProvider : MonoBehaviour
 
                 outputFormat = TextureFormat.RGBA32,
 
-                transformation = Transformation.MirrorX
+                transformation = Transformation.MirrorX | Transformation.MirrorY
             };
         }
 
 
         // TODO: proparly manage memory. This way is cursed: sometimes rewrites texture that is processing by mediapipe. Results are unpredictable. Needs fix
-        if (_textureToProcess is null)
+        if (_textureToProcess is null || _textureToProcess.width != cpuImage.width)
             _textureToProcess = new Texture2D(cpuImage.width, cpuImage.height, TextureFormat.RGBA32, false);
+        
         try
         {
             unsafe
