@@ -5,10 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using static UnityEngine.XR.ARSubsystems.XRCpuImage;
@@ -36,6 +34,7 @@ public class HandProvider : MonoBehaviour
     private Texture2D _textureToProcess;
     private ConversionParams? _conversionParams;
     private (List<Vector3> landmarkVectors, long timestampMillisec) _lastRecognizerResult = (new List<Vector3>(), 0);
+    private Vector3[] _lastLandmarksWorldPosition = new Vector3[21];
     private Stopwatch _stopwatch = new Stopwatch();
 
     private const string NONE_POSE_NAME = "None";
@@ -97,9 +96,11 @@ public class HandProvider : MonoBehaviour
         {
             Vector3[] filteredData = _filter.Filter(_lastRecognizerResult.landmarkVectors.ToArray());
             Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
+            
+            _lastLandmarksWorldPosition = finalPoints;
 
             handVisualizer.SendNewLandMarks(finalPoints);
-
+            // To Do: inverse dependence.
 
             if (!LastDetectedPose.Equals(_poseTmp))
             {
@@ -145,7 +146,7 @@ public class HandProvider : MonoBehaviour
 
                 outputFormat = TextureFormat.RGBA32,
 
-                transformation = Transformation.MirrorX | Transformation.MirrorY
+                transformation = Transformation.MirrorX  | Transformation.MirrorY
             };
         }
 
@@ -179,4 +180,12 @@ public class HandProvider : MonoBehaviour
         _depthModifier.Calibrate(_lastRecognizerResult.landmarkVectors.ToArray());
     }
 
+    public Vector3[] GetLastLandmarks()
+    {
+        return _lastRecognizerResult.landmarkVectors.ToArray();
+    }
+    public Vector3[] GetLastLandmarksWorldPosition()
+    {
+        return _lastLandmarksWorldPosition;
+    }
 }

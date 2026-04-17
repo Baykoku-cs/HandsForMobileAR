@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class VrMode : MonoBehaviour
 {
+    [SerializeField] private GameObject UiGameObject;
+    // To Do: needs to be removed
+    [SerializeField]
+    private Slider eyeStepSlider;
+
     [SerializeField] private Camera CameraToSplit;
     [SerializeField] private RawImage FullScreen;
     [SerializeField] private RawImage LeftEye;
@@ -20,6 +26,9 @@ public class VrMode : MonoBehaviour
         
         FullScreen.texture = renderTexture;
         FullScreen.enabled = true;
+
+
+        eyeStepSlider.onValueChanged.AddListener(SetEyeStep);
     }
 
     private void OnDestroy()
@@ -29,6 +38,8 @@ public class VrMode : MonoBehaviour
             renderTexture.Release();
             renderTexture = null;
         }
+
+        eyeStepSlider.onValueChanged.RemoveListener(SetEyeStep);
     }
 
     private void Update()
@@ -42,6 +53,9 @@ public class VrMode : MonoBehaviour
 
     private void ChangeMode(bool currentMode)
     {
+        UiGameObject.SetActive(!currentMode);
+        eyeStepSlider.gameObject.SetActive(currentMode);
+
         var currentScreenRect = GetComponent<RectTransform>();
         var lEyeRect = LeftEye.gameObject.GetComponent<RectTransform>();
         var rEyeRect = RightEye.gameObject.GetComponent<RectTransform>();
@@ -88,5 +102,13 @@ public class VrMode : MonoBehaviour
     public void ChangeMode()
     {
         TriggerSplitModeOn = !TriggerSplitModeOn;
+    }
+
+    public void SetEyeStep(float value)
+    {
+        eyeStep = (value * 0.1f - 0.05f) * 2;
+
+        LeftEye.uvRect = new Rect(0.25f - eyeStep, LeftEye.uvRect.y, LeftEye.uvRect.width, LeftEye.uvRect.height);
+        RightEye.uvRect = new Rect(0.25f + eyeStep, RightEye.uvRect.y, RightEye.uvRect.width, RightEye.uvRect.height);
     }
 }
