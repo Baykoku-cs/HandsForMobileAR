@@ -27,8 +27,8 @@ public class PoseState
     public event EventHandler OnPoseCanceled;
     public event EventHandler OnPoseLost;
 
-    public float TimeToDetectSeconds = 1f;
-    public float TimeToExpireSeconds = 0.5f;
+    private float _timeToDetectSeconds = 1f;
+    private float _timeToExpireSeconds = 0.5f;
 
     private float _activateTimer;
     private float _expireTimer;
@@ -66,7 +66,7 @@ public class PoseState
         if (IsPaused)
         {
             _expireTimer += dt;
-            if (_expireTimer > TimeToExpireSeconds)
+            if (_expireTimer > _timeToExpireSeconds)
             {
                 if (IsDetected)
                 {
@@ -84,7 +84,7 @@ public class PoseState
             if (IsDetecting && !IsDetected)
             {
                 _activateTimer += dt;
-                if (_activateTimer > TimeToDetectSeconds)
+                if (_activateTimer > _timeToDetectSeconds)
                 {
                     IsDetected = true;
                     IsDetecting = false;
@@ -105,6 +105,6 @@ public class PoseState
 
     public float GetActivationTimerNormalized()
     {
-        return _activateTimer / TimeToDetectSeconds;
+        return _activateTimer / _timeToDetectSeconds;
     }
 }

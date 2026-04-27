@@ -4,28 +4,28 @@ using UnityEngine.UI;
 
 public class VrMode : MonoBehaviour
 {
-    [SerializeField] private GameObject UiGameObject;
+    [SerializeField] private GameObject _uiGameObject;
     // To Do: needs to be removed
     [SerializeField]
     private Slider eyeStepSlider;
 
-    [SerializeField] private Camera CameraToSplit;
-    [SerializeField] private RawImage FullScreen;
-    [SerializeField] private RawImage LeftEye;
-    [SerializeField] private RawImage RightEye;
-    [SerializeField] private bool TriggerSplitModeOn;
+    [SerializeField] private Camera cameraToSplit;
+    [SerializeField] private RawImage fullScreen;
+    [SerializeField] private RawImage leftEye;
+    [SerializeField] private RawImage rightEye;
+    [SerializeField] private bool triggerSplitModeOn;
     [SerializeField, Range(-0.1f, 0.1f)] private float eyeStep;
 
     private float _cropPercentage = 0.25f;
-    private bool IsSplitModeOn;
+    private bool isSplitModeOn;
     private RenderTexture renderTexture;
 
     private void Start()
     {
         Recount();
         
-        FullScreen.texture = renderTexture;
-        FullScreen.enabled = true;
+        fullScreen.texture = renderTexture;
+        fullScreen.enabled = true;
 
 
         eyeStepSlider.onValueChanged.AddListener(SetEyeStep);
@@ -44,21 +44,21 @@ public class VrMode : MonoBehaviour
 
     private void Update()
     {
-        if (!TriggerSplitModeOn.Equals(IsSplitModeOn))
+        if (!triggerSplitModeOn.Equals(isSplitModeOn))
         {
-            IsSplitModeOn = TriggerSplitModeOn;
-            ChangeMode(IsSplitModeOn);
+            isSplitModeOn = triggerSplitModeOn;
+            ChangeMode(isSplitModeOn);
         }
     }
 
     private void ChangeMode(bool currentMode)
     {
-        UiGameObject.SetActive(!currentMode);
+        _uiGameObject.SetActive(!currentMode);
         eyeStepSlider.gameObject.SetActive(currentMode);
 
         var currentScreenRect = GetComponent<RectTransform>();
-        var lEyeRect = LeftEye.gameObject.GetComponent<RectTransform>();
-        var rEyeRect = RightEye.gameObject.GetComponent<RectTransform>();
+        var lEyeRect = leftEye.gameObject.GetComponent<RectTransform>();
+        var rEyeRect = rightEye.gameObject.GetComponent<RectTransform>();
 
         if (currentMode)
         {
@@ -70,20 +70,20 @@ public class VrMode : MonoBehaviour
             lEyeRect.sizeDelta = new Vector2(eyeWidth, lEyeRect.sizeDelta.y);
             rEyeRect.sizeDelta = new Vector2(eyeWidth, rEyeRect.sizeDelta.y);
 
-            LeftEye.texture = texture;
-            RightEye.texture = texture;
+            leftEye.texture = texture;
+            rightEye.texture = texture;
 
-            LeftEye.enabled = true;
-            RightEye.enabled = true;
-            FullScreen.enabled = false;
+            leftEye.enabled = true;
+            rightEye.enabled = true;
+            fullScreen.enabled = false;
         }
         else
         {
             Recount();
-            FullScreen.texture = renderTexture;
-            FullScreen.enabled = true;
-            LeftEye.enabled = false;
-            RightEye.enabled = false;
+            fullScreen.texture = renderTexture;
+            fullScreen.enabled = true;
+            leftEye.enabled = false;
+            rightEye.enabled = false;
         }
     }
 
@@ -93,22 +93,22 @@ public class VrMode : MonoBehaviour
         renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
         // should be cpuImage resolution, not screen
         
-        CameraToSplit.targetTexture = renderTexture;
+        cameraToSplit.targetTexture = renderTexture;
 
-        LeftEye.uvRect = new Rect(0.25f - eyeStep, LeftEye.uvRect.y, LeftEye.uvRect.width, LeftEye.uvRect.height);
-        RightEye.uvRect = new Rect(0.25f + eyeStep, RightEye.uvRect.y, RightEye.uvRect.width, RightEye.uvRect.height);
+        leftEye.uvRect = new Rect(0.25f - eyeStep, leftEye.uvRect.y, leftEye.uvRect.width, leftEye.uvRect.height);
+        rightEye.uvRect = new Rect(0.25f + eyeStep, rightEye.uvRect.y, rightEye.uvRect.width, rightEye.uvRect.height);
     }
 
     public void ChangeMode()
     {
-        TriggerSplitModeOn = !TriggerSplitModeOn;
+        triggerSplitModeOn = !triggerSplitModeOn;
     }
 
     public void SetEyeStep(float value)
     {
         eyeStep = (value * 0.1f - 0.05f) * 2;
 
-        LeftEye.uvRect = new Rect(0.25f - eyeStep, LeftEye.uvRect.y, LeftEye.uvRect.width, LeftEye.uvRect.height);
-        RightEye.uvRect = new Rect(0.25f + eyeStep, RightEye.uvRect.y, RightEye.uvRect.width, RightEye.uvRect.height);
+        leftEye.uvRect = new Rect(0.25f - eyeStep, leftEye.uvRect.y, leftEye.uvRect.width, leftEye.uvRect.height);
+        rightEye.uvRect = new Rect(0.25f + eyeStep, rightEye.uvRect.y, rightEye.uvRect.width, rightEye.uvRect.height);
     }
 }

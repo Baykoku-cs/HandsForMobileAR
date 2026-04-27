@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,7 +31,15 @@ public class PoseDetectBus : MonoBehaviour
         if (_handProvider != null)
             _handProvider.OnPoseChanged += HandlePoseChange;
     }
-    
+    private void Update()
+    {
+        float dt = Time.deltaTime;
+        for (int i = 0; i < _poses.Length; i++)
+        {
+            _poses[i].Tick(dt);
+        }
+    }
+
     public void SubscribeOnPoseDetected(EventType eventType, PoseType poseType, UnityAction action)
     {
         switch (eventType)
@@ -79,15 +86,6 @@ public class PoseDetectBus : MonoBehaviour
         }
     }
     
-    private void Update()
-    {
-        float dt = Time.deltaTime;
-        for (int i = 0; i < _poses.Length; i++)
-        {
-            _poses[i].Tick(dt);
-        }
-    }
-
     private void HandlePoseChange(object sender, string newPoseName)
     {
         if (Enum.TryParse(newPoseName, out PoseType newPoseType))

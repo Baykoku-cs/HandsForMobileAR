@@ -39,14 +39,14 @@ public class HandProvider : MonoBehaviour
 
     private const string NONE_POSE_NAME = "None";
     private string LastDetectedPose = NONE_POSE_NAME;
-    public event EventHandler<string> OnPoseChanged;
-
     private string _poseTmp = NONE_POSE_NAME;
     // To Do: get rid of this. Needs as buffer to remove all event into the main thread
 
+    public event EventHandler<string> OnPoseChanged;
+
     private void Awake()
     {
-        _filter = new JitterFilter();
+        _filter = new JitterFilter(0.8f);
         _depthModifier = new DepthModifier(arCamera, 0.5f);
     }
     private void Start()
@@ -60,7 +60,33 @@ public class HandProvider : MonoBehaviour
 
         _stopwatch.Start();
     }
+    private void Update()
+    {
+        if (_areNewLandmarksReady)
+        {
+            Vector3[] filteredData = _filter.Filter(_lastRecognizerResult.landmarkVectors.ToArray());
+            Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
 
+            _lastLandmarksWorldPosition = finalPoints;
+
+            handVisualizer.SendNewLandMarks(finalPoints);
+            // To Do: inverse dependence.
+
+            if (!LastDetectedPose.Equals(_poseTmp))
+            {
+                LastDetectedPose = _poseTmp;
+                OnPoseChanged?.Invoke(this, LastDetectedPose);
+            }
+
+
+            _areNewLandmarksReady = false;
+        }
+        if (_isReady)
+        {
+            GenerateLandmarks();
+            StartCoroutine(Rest(1f / TARGET_FPS));
+        }
+    }
     private void ProcessLandmarksCallback(GestureRecognizerResult gestureRecognizerResult, Mediapipe.Image image, long timestampMillisec)
     {
         if (gestureRecognizerResult.handLandmarks is null)
@@ -88,34 +114,6 @@ public class HandProvider : MonoBehaviour
         _areNewLandmarksReady = true;
 
         image.Dispose();
-    }
-
-    private void Update()
-    {
-        if (_areNewLandmarksReady)
-        {
-            Vector3[] filteredData = _filter.Filter(_lastRecognizerResult.landmarkVectors.ToArray());
-            Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
-            
-            _lastLandmarksWorldPosition = finalPoints;
-
-            handVisualizer.SendNewLandMarks(finalPoints);
-            // To Do: inverse dependence.
-
-            if (!LastDetectedPose.Equals(_poseTmp))
-            {
-                LastDetectedPose = _poseTmp;
-                OnPoseChanged?.Invoke(this, LastDetectedPose);
-            }
-
-
-            _areNewLandmarksReady = false;
-        }
-        if (_isReady)
-        {
-            GenerateLandmarks();
-            StartCoroutine(Rest(1f / TARGET_FPS));
-        }
     }
 
     private IEnumerator Rest(float restTime)

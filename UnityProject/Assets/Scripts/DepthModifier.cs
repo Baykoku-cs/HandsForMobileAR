@@ -29,6 +29,7 @@ public class DepthModifier
             Vector3 screenPoint = new Vector3(
                 landmarks[i].x * screenWidth,
                 landmarks[i].y * screenHeight,
+                // 1560 - 300
                 baseDistance + (landmarks[i].z * _zMultiplier)
             );
 
