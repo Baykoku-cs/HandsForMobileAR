@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework.Constraints;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,6 +98,8 @@ public class VrMode : MonoBehaviour
 
         leftEye.uvRect = new Rect(0.25f - eyeStep, leftEye.uvRect.y, leftEye.uvRect.width, leftEye.uvRect.height);
         rightEye.uvRect = new Rect(0.25f + eyeStep, rightEye.uvRect.y, rightEye.uvRect.width, rightEye.uvRect.height);
+
+        fullScreen.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
     }
 
     public void ChangeMode()

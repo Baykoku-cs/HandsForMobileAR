@@ -436,13 +436,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08728b796da506241ba8c4a256e9911a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VrMode
-  UiGameObject: {fileID: 1604524396}
+  _uiGameObject: {fileID: 1604524396}
   eyeStepSlider: {fileID: 1518989078}
-  CameraToSplit: {fileID: 1826973780}
-  FullScreen: {fileID: 28687944}
-  LeftEye: {fileID: 1271620053}
-  RightEye: {fileID: 2141263506}
-  TriggerSplitModeOn: 0
+  cameraToSplit: {fileID: 1826973780}
+  fullScreen: {fileID: 28687944}
+  leftEye: {fileID: 1271620053}
+  rightEye: {fileID: 2141263506}
+  triggerSplitModeOn: 0
   eyeStep: 0
 --- !u!1 &131205797
 GameObject:
