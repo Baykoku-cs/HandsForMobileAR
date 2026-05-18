@@ -30,7 +30,7 @@ public class HandVisualizer : MonoBehaviour
         {
             for (int i = 0; i < 21; i++)
             {
-                if (i == 0)
+                if (i == 9)
                 {
                     worldParent.position = lastTrakedLandmarkVectors[i];
                 }
