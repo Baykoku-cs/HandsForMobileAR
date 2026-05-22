@@ -4,11 +4,9 @@ public class DepthModifier
 {
     private float _calibratedHandSize;
     private float _zMultiplier;
-    private Camera _arCamera;
 
-    public DepthModifier(Camera arCamera, float zMultiplier = 10f)
+    public DepthModifier(float zMultiplier = 10f)
     {
-        _arCamera = arCamera;
         _zMultiplier = zMultiplier;
     }
 
@@ -17,7 +15,7 @@ public class DepthModifier
         _calibratedHandSize = CalculateHandSize(landmarks);
     }
 
-    public Vector3[] Process(Vector3[] landmarks, float screenWidth, float screenHeight)
+    public Vector3[] Process(Vector3[] landmarks, Vector2Int resolution)
     {
         Vector3[] worldPoints = new Vector3[landmarks.Length];
 
@@ -27,13 +25,13 @@ public class DepthModifier
         for (int i = 0; i < landmarks.Length; i++)
         {
             Vector3 screenPoint = new Vector3(
-                landmarks[i].x * screenWidth,
-                landmarks[i].y * screenHeight,
-                // 1560 - 300
+                landmarks[i].x * resolution.x,
+                landmarks[i].y * resolution.y - (resolution.y - Screen.height) * 0.5f,
+                // 
                 baseDistance + (landmarks[i].z * _zMultiplier)
             );
 
-            worldPoints[i] = _arCamera.ScreenToWorldPoint(screenPoint);
+            worldPoints[i] = Camera.main.ScreenToWorldPoint(screenPoint);
         }
 
         return worldPoints;

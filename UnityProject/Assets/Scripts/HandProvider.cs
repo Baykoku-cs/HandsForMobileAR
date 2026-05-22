@@ -1,26 +1,21 @@
-﻿using Mediapipe.Tasks.Core;
+﻿using Assets.Scripts;
+using Mediapipe.Tasks.Core;
 using Mediapipe.Tasks.Vision.Core;
 using Mediapipe.Tasks.Vision.GestureRecognizer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
-using static UnityEngine.XR.ARSubsystems.XRCpuImage;
 
 public class HandProvider : MonoBehaviour
 {
     [SerializeField]
     private TextAsset model;
     [SerializeField]
-    private ARCameraManager manager;
-    [SerializeField]
-    private Camera arCamera;
-    [SerializeField]
     private HandVisualizer handVisualizer;
+    [SerializeField]
+    private CameraImageProvider _imageProvider;
 
     private const int TARGET_FPS = 30;
     private GestureRecognizer _gestureRecognizer;
@@ -31,8 +26,6 @@ public class HandProvider : MonoBehaviour
     private JitterFilter _filter;
     private DepthModifier _depthModifier;
 
-    private Texture2D _textureToProcess;
-    private ConversionParams? _conversionParams;
     private (List<Vector3> landmarkVectors, long timestampMillisec) _lastRecognizerResult = (new List<Vector3>(), 0);
     private Vector3[] _lastLandmarksWorldPosition = new Vector3[21];
     private Stopwatch _stopwatch = new Stopwatch();
@@ -46,8 +39,8 @@ public class HandProvider : MonoBehaviour
 
     private void Awake()
     {
-        _filter = new JitterFilter(0.8f);
-        _depthModifier = new DepthModifier(arCamera, 0.5f);
+        _filter = new JitterFilter(1f);
+        _depthModifier = new DepthModifier(0.5f);
     }
     private void Start()
     {
@@ -65,7 +58,7 @@ public class HandProvider : MonoBehaviour
         if (_areNewLandmarksReady)
         {
             Vector3[] filteredData = _filter.Filter(_lastRecognizerResult.landmarkVectors.ToArray());
-            Vector3[] finalPoints = _depthModifier.Process(filteredData, Screen.width, Screen.height);
+            Vector3[] finalPoints = _depthModifier.Process(filteredData, _imageProvider.GetScaledCameraResolution());
 
             _lastLandmarksWorldPosition = finalPoints;
 
@@ -125,52 +118,10 @@ public class HandProvider : MonoBehaviour
 
     private void GenerateLandmarks()
     {
-        if (manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage))
+        if (_imageProvider.TryGetLastCameraTexture(out Texture2D texture))
         {
-            GetTexture2DFromCpuImage(cpuImage);
-            _gestureRecognizer.RecognizeAsync(new Mediapipe.Image(_textureToProcess), _stopwatch.ElapsedMilliseconds);
+            _gestureRecognizer.RecognizeAsync(new Mediapipe.Image(texture), _stopwatch.ElapsedMilliseconds);
         }
-    }
-    
-    private Texture2D GetTexture2DFromCpuImage(XRCpuImage cpuImage)
-    {
-        if (_conversionParams is null || _conversionParams.Value.inputRect.width != cpuImage.width)
-        {
-            _conversionParams = new ConversionParams
-            {
-                inputRect = new RectInt(0, 0, cpuImage.width, cpuImage.height),
-
-                outputDimensions = new Vector2Int(cpuImage.width, cpuImage.height),
-
-                outputFormat = TextureFormat.RGBA32,
-
-                transformation = Transformation.MirrorX  | Transformation.MirrorY
-            };
-        }
-
-
-        // TODO: proparly manage memory. This way is cursed: sometimes rewrites texture that is processing by mediapipe. Results are unpredictable. Needs fix
-        if (_textureToProcess is null || _textureToProcess.width != cpuImage.width)
-            _textureToProcess = new Texture2D(cpuImage.width, cpuImage.height, TextureFormat.RGBA32, false);
-        
-        try
-        {
-            unsafe
-            {
-                cpuImage.Convert(
-                  _conversionParams.Value,
-                  new IntPtr(_textureToProcess.GetRawTextureData<byte>().GetUnsafePtr()),
-                  _textureToProcess.GetRawTextureData<byte>().Length);
-            }
-        }
-        finally
-        {
-            cpuImage.Dispose();
-        }
-
-        _textureToProcess.Apply();
-
-        return _textureToProcess;
     }
 
     public void Calibrate()
