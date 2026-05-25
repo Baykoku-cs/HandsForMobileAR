@@ -17,6 +17,8 @@ public class SnapPointGrabber : MonoBehaviour
     [SerializeField]
     private Color CalmColor;
 
+    private bool _isHolding;
+
     private void Start()
     {
         _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Closed_Fist, OnFistDetected);
@@ -31,13 +33,22 @@ public class SnapPointGrabber : MonoBehaviour
 
     private void OnFistDetected()
     {
-        _triggedSnapPoint?.Snap(transform);
+        if (_triggedSnapPoint is not null)
+        {
+            _triggedSnapPoint?.Snap(transform);
+            _isHolding = true;
+        }
     }
     private void OnFistLost()
     {
-        _triggedSnapPoint?.UnSnap();
+        if (_triggedSnapPoint is not null && _isHolding)
+        {
+            _triggedSnapPoint?.UnSnap();
+            _triggedSnapPoint = null;
+            _grabberVisual.material.color = CalmColor;
+            _isHolding = false;
+        }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,10 +63,13 @@ public class SnapPointGrabber : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<SnapPoint>(out SnapPoint point) && point == _triggedSnapPoint)
+        if (!_isHolding)
         {
-            _triggedSnapPoint = null;
-            _grabberVisual.material.color = CalmColor;
+            if (other.TryGetComponent<SnapPoint>(out SnapPoint point) && point == _triggedSnapPoint)
+            {
+                _triggedSnapPoint = null;
+                _grabberVisual.material.color = CalmColor;
+            }
         }
     }
 }

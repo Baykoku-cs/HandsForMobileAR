@@ -5,15 +5,17 @@ public class SnapPointController : MonoBehaviour
 {
     private Transform followPoint;
     private SnapPoint grabbedPoint;
-
-    private void Update()
+    private Rigidbody rb;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    private void FixedUpdate()
     {
         if (followPoint != null)
         {
-            if (Vector3.Distance(grabbedPoint.transform.position, followPoint.position) > 0.005f)
-            {
-                transform.Translate(followPoint.position - grabbedPoint.transform.position);
-            }
+            var positionDelta = Time.deltaTime * 5 * (followPoint.position - grabbedPoint.transform.position);
+            rb.MovePosition(transform.position + positionDelta);
         }
     }
 
