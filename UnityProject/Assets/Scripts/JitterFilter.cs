@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 public class JitterFilter
 {
     private Vector3[] _filteredLandmarks;

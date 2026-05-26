@@ -1,55 +1,40 @@
-﻿using System;
-using System.Drawing;
+﻿using Mediapipe;
+using System;
 using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
-using Unity.Properties;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using static UnityEngine.XR.ARSubsystems.XRCpuImage;
 
 namespace Assets.Scripts
 {
-    internal class CameraImageProvider : MonoBehaviour
+    internal class CameraImageProvider : MonoBehaviour, IImageProvider
     {
-        [SerializeField]
-        private ARCameraManager manager;
-        [SerializeField]
-        private Camera arCamera;
+        [SerializeField] private ARCameraManager _manager;
+        [SerializeField] HandTrackingProvider _handTrackingProvider;
 
         private Texture2D _textureToProcess;
         private ConversionParams? _conversionParams;
 
-        public TextMeshProUGUI text;
+        private void Start()
+        {
+            _handTrackingProvider.ImageProvider = this;
+        }
+
+        public CameraImageProvider(ARCameraManager manager)
+        {
+            _manager = manager;
+        }
         public Vector2Int GetScreenResolution() => new Vector2Int(Screen.width, Screen.height);
         public Vector2Int GetCameraResolution() => new Vector2Int(_conversionParams.Value.outputDimensions.x, _conversionParams.Value.outputDimensions.y);
-
         public Vector2Int GetScaledCameraResolution()
         {
             var widthScale = (float) Screen.width / _conversionParams.Value.outputDimensions.x;
             var scaledHeight = (int)(_conversionParams.Value.outputDimensions.y * widthScale);
 
-            var a = GetCameraResolution();
-
-            text.text = $"camera:{_conversionParams.Value.outputDimensions.x}x{_conversionParams.Value.outputDimensions.y}\nscreen:{Screen.width}x{Screen.height}scaled:{Screen.width}x{scaledHeight}";
-
             return new Vector2Int(Screen.width, scaledHeight);
         }
-
-        public bool TryGetLastCameraTexture(out Texture2D cameraTexture)
-        {
-            cameraTexture = null;
-            var isImageExist = manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage);
-            if (isImageExist)
-            {
-                cameraTexture = GetTexture2DFromCpuImage(cpuImage);
-                return isImageExist;
-            }
-
-            return isImageExist;
-        }
-
         private Texture2D GetTexture2DFromCpuImage(XRCpuImage cpuImage)
         {
             if (_conversionParams is null || _conversionParams.Value.inputRect.width != cpuImage.width)
@@ -89,6 +74,20 @@ namespace Assets.Scripts
             _textureToProcess.Apply();
 
             return _textureToProcess;
+        }
+
+        public bool TryGetLastImage(out Image image)
+        {
+            image = null;
+
+            var isImageExist = _manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage);
+            if (isImageExist)
+            {
+                image = new Image(GetTexture2DFromCpuImage(cpuImage));
+                return isImageExist;
+            }
+
+            return isImageExist;
         }
     }
 }

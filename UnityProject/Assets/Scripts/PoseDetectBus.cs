@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Assets.Scripts;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PoseDetectBus : MonoBehaviour
+public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
 {
-    [SerializeField] private HandProvider _handProvider;
+    [SerializeField] private HandTrackingProvider _handTrackingProvider;
 
     private PoseState[] _poses;
     private PoseType _lastPoseType = PoseType.None;
@@ -19,17 +21,9 @@ public class PoseDetectBus : MonoBehaviour
             _poses[i] = new PoseState((PoseType)i);
         }
     }
-
-    private void OnEnable()
+    private void Start()
     {
-        if (_handProvider != null)
-            _handProvider.OnPoseChanged += HandlePoseChange;
-    }
-
-    private void OnDisable()
-    {
-        if (_handProvider != null)
-            _handProvider.OnPoseChanged += HandlePoseChange;
+        _handTrackingProvider.GestureInterpreter = this;
     }
     private void Update()
     {
@@ -85,10 +79,14 @@ public class PoseDetectBus : MonoBehaviour
                 break;
         }
     }
-    
-    private void HandlePoseChange(object sender, string newPoseName)
+    public float GetPoseDetectTimerNormalized(PoseType poseType)
     {
-        if (Enum.TryParse(newPoseName, out PoseType newPoseType))
+        return _poses[(int)poseType].GetActivationTimerNormalized();
+    }
+
+    public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName)
+    {
+        if (Enum.TryParse(detectedGestureName, out PoseType newPoseType))
         {
             if (_lastPoseType != newPoseType)
             {
@@ -100,12 +98,7 @@ public class PoseDetectBus : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"Unknown pose: {newPoseName}");
+            Debug.LogWarning($"Unknown pose: {detectedGestureName}");
         }
-    }
-
-    public float GetPoseDetectTimerNormalized(PoseType poseType)
-    {
-        return _poses[(int)poseType].GetActivationTimerNormalized();
     }
 }

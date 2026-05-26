@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
 public class GestureControlPuzzlesTMP : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GestureControlPuzzlesTMP : MonoBehaviour
     [SerializeField]
     private PoseDetectBus _poseDetectBus;
     [SerializeField]
-    private HandProvider _handProvider;
+    private LandmarkInterpreter _landmarkInterpreter;
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class GestureControlPuzzlesTMP : MonoBehaviour
 
     private void SpawnGameSetup()
     {
-        gameSetup.transform.position = _handProvider.GetLastLandmarksWorldPosition()[7];
+        gameSetup.transform.position = _landmarkInterpreter.LastProcessedLandmarks[7];
 
         gameSetup.SetActive(true);
     }

@@ -1,22 +1,34 @@
-﻿using UnityEngine;
+﻿using Assets;
+using Assets.Scripts;
+using UnityEngine;
 
-public class DepthModifier
+internal class CameraDepthModifier : MonoBehaviour, IDepthModifier
 {
+    [SerializeField] private LandmarkInterpreter _landmarkInterpreter;
+
     private float _calibratedHandSize;
     private float _zMultiplier;
 
-    public DepthModifier(float zMultiplier = 10f)
+    private void Start()
+    {
+        _landmarkInterpreter.DepthModifier = this;
+    }
+
+    public CameraDepthModifier(float zMultiplier = 10f)
     {
         _zMultiplier = zMultiplier;
     }
-
     public void Calibrate(Vector3[] landmarks)
     {
         _calibratedHandSize = CalculateHandSize(landmarks);
     }
-
-    public Vector3[] Process(Vector3[] landmarks, Vector2Int resolution)
+    public void Process(Vector3[] landmarks, IImageProvider imageProvider)
     {
+        if (imageProvider is not CameraImageProvider)
+            throw new System.Exception("This component requires CameraImageProvider");
+
+        var resolution = (imageProvider as CameraImageProvider).GetScaledCameraResolution();
+
         Vector3[] worldPoints = new Vector3[landmarks.Length];
 
         float currentSize = CalculateHandSize(landmarks);
@@ -27,16 +39,12 @@ public class DepthModifier
             Vector3 screenPoint = new Vector3(
                 landmarks[i].x * resolution.x,
                 landmarks[i].y * resolution.y - (resolution.y - Screen.height) * 0.5f,
-                // 
                 baseDistance + (landmarks[i].z * _zMultiplier)
             );
 
-            worldPoints[i] = Camera.main.ScreenToWorldPoint(screenPoint);
+            landmarks[i] = Camera.main.ScreenToWorldPoint(screenPoint);
         }
-
-        return worldPoints;
     }
-
     private float CalculateHandSize(Vector3[] landmarks)
     {
         float size = 0;

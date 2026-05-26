@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -8,7 +9,7 @@ public class TubeDrawer : MonoBehaviour
     [SerializeField] private int _radialSegments = 8;
     [SerializeField] private Color _brushColor = Color.white;
 
-    [SerializeField] private HandProvider _handProvider;
+    [SerializeField] private LandmarkInterpreter _landmarkInterpreter;
     [SerializeField] private PoseDetectBus _poseDetectBus;
 
     [SerializeField] private MeshFilter PaintingPrefab;
@@ -38,7 +39,7 @@ public class TubeDrawer : MonoBehaviour
     {
         if (_isDrawMode)
         {
-            Vector3 currentPos = _handProvider.GetLastLandmarksWorldPosition()[8];
+            Vector3 currentPos = _landmarkInterpreter.LastProcessedLandmarks[8];
             if (_path.Count == 0 || Vector3.Distance(currentPos, _path[_path.Count - 1]) > 0.02f)
             {
                 _path.Add(currentPos);

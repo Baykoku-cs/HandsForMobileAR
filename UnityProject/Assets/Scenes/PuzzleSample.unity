@@ -350,10 +350,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.08, y: -0.27}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &44930223
 MonoBehaviour:
@@ -769,10 +769,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.24, y: -0.27}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &150958790
 MonoBehaviour:
@@ -2190,10 +2190,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.08, y: -0.09}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &575268992
 MonoBehaviour:
@@ -2698,10 +2698,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.56, y: -0.27}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &737973357
 MonoBehaviour:
@@ -3222,10 +3222,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.39999998, y: -0.09}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &945834377
 MonoBehaviour:
@@ -3636,7 +3636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestureCalibrator
   _vrMode: {fileID: 94880701}
-  _handProvider: {fileID: 1499391725}
+  landmarkInterpreter: {fileID: 1499391729}
   _poseDetectBus: {fileID: 1499391726}
 --- !u!4 &1109142848
 Transform:
@@ -3667,7 +3667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GestureControlPuzzlesTMP
   gameSetup: {fileID: 1445658477}
   _poseDetectBus: {fileID: 1499391726}
-  _handProvider: {fileID: 1499391725}
+  _landmarkInterpreter: {fileID: 1499391729}
 --- !u!1001 &1196082713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4149,10 +4149,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.24, y: -0.09}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266312479
 MonoBehaviour:
@@ -4318,10 +4318,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.56, y: -0.09}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295849313
 MonoBehaviour:
@@ -4594,10 +4594,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1770755836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.39999998, y: -0.27}
+  m_SizeDelta: {x: 0.16, y: 0.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1381302146
 MonoBehaviour:
@@ -4925,7 +4925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1445658478
 Transform:
   m_ObjectHideFlags: 0
@@ -5029,9 +5029,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1499391721}
-  - component: {fileID: 1499391725}
   - component: {fileID: 1499391726}
   - component: {fileID: 1499391727}
+  - component: {fileID: 1499391729}
+  - component: {fileID: 1499391728}
+  - component: {fileID: 1499391730}
   m_Layer: 0
   m_Name: Solver
   m_TagString: Untagged
@@ -5054,21 +5056,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1499391725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499391719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d56af20e4bb3664880ad6c3ca10ea64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HandProvider
-  model: {fileID: 4900000, guid: 08252adb5d10f3547a75a0d53212be4e, type: 3}
-  handVisualizer: {fileID: 1571903646}
-  _imageProvider: {fileID: 1499391727}
 --- !u!114 &1499391726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5081,7 +5068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e8dad8646d4d446b33a696ff173b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoseDetectBus
-  _handProvider: {fileID: 1499391725}
+  _handTrackingProvider: {fileID: 1499391728}
 --- !u!114 &1499391727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5094,9 +5081,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fb80cbd1738f34a9f5838817bdf57c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.CameraImageProvider
-  manager: {fileID: 1826973778}
-  arCamera: {fileID: 1826973780}
-  text: {fileID: 290519389}
+  _manager: {fileID: 1826973778}
+  _handTrackingProvider: {fileID: 1499391728}
+--- !u!114 &1499391728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499391719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798f12cec3794644a9b4c7b516d28de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.HandTrackingProvider
+  _modelMode: 1
+  model: {fileID: 4900000, guid: 08252adb5d10f3547a75a0d53212be4e, type: 3}
+--- !u!114 &1499391729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499391719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d29a73b93aa0214e84e4efaec0d518f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.LandmarkInterpreter
+  _handTrackingProvider: {fileID: 1499391728}
+  _handVisualizer: {fileID: 1571903646}
+--- !u!114 &1499391730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499391719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08390c8b50722a49b4a0b55fcdc0198, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraDepthModifier
+  _landmarkInterpreter: {fileID: 1499391729}
 --- !u!1 &1518989076
 GameObject:
   m_ObjectHideFlags: 0
@@ -5776,7 +5803,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1499391725}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: HandProvider, Assembly-CSharp
         m_MethodName: Calibrate
         m_Mode: 1

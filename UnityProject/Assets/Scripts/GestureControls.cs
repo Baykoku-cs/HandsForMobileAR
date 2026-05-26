@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
 public class GestureControls : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class GestureControls : MonoBehaviour
     private VrMode _vrMode;
 
     [SerializeField]
-    private HandProvider _handProvider;
+    private LandmarkInterpreter landmarkInterpreter;
 
     [SerializeField]
     private PoseDetectBus _poseDetectBus;
@@ -30,6 +31,6 @@ public class GestureControls : MonoBehaviour
 
     private void OnVictoryDetected()
     {
-        _handProvider.Calibrate();
+        (landmarkInterpreter.DepthModifier as CameraDepthModifier).Calibrate(landmarkInterpreter.LastRawLandmarks);
     }
 }

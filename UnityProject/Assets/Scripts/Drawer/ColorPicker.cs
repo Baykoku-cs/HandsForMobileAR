@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
 public class ColorPicker : MonoBehaviour
 {
     [SerializeField]
-    private HandProvider _handProvider;
+    private LandmarkInterpreter _landmarkIntepreter;
     [SerializeField]
     private PoseDetectBus _poseDetectBus;
     [SerializeField]
@@ -29,13 +30,13 @@ public class ColorPicker : MonoBehaviour
     {
         if (tfHolder is not null)
         {
-            tfHolder.transform.position = _handProvider.GetLastLandmarksWorldPosition()[8];
+            tfHolder.transform.position = _landmarkIntepreter.LastProcessedLandmarks[8];
         }
     }
 
     private void SpawnDialog()
     {
-        var worldPos = _handProvider.GetLastLandmarksWorldPosition();
+        var worldPos = _landmarkIntepreter.LastProcessedLandmarks;
 
         if (palleteHolder is not null)
         {
