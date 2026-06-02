@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class SnapPointController : MonoBehaviour
 {
-    private Transform followPoint;
-    private SnapPoint grabbedPoint;
-    private Rigidbody rb;
-
-
     public event EventHandler OnPointGrabbed;
     public event EventHandler OnPointReleased;
+
+    private Transform _followPoint;
+    private SnapPoint _grabbedPoint;
+    private Rigidbody _rb;
 
     [SerializeField] private LandmarkInterpreter _landmarkInterpreter;
     private Vector3 _palmNormalWhenGrabbed; 
@@ -18,15 +17,15 @@ public class SnapPointController : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        if (followPoint != null)
+        if (_followPoint != null)
         {
-            var positionDelta = Time.deltaTime * 5f * (followPoint.position - grabbedPoint.transform.position);
-            rb.MovePosition(transform.position + positionDelta);
+            var positionDelta = Time.deltaTime * 5f * (_followPoint.position - _grabbedPoint.transform.position);
+            _rb.MovePosition(transform.position + positionDelta);
 
             Quaternion palmRotationDelta = Quaternion.FromToRotation(
                 _palmNormalWhenGrabbed,
@@ -34,7 +33,7 @@ public class SnapPointController : MonoBehaviour
             );
             Quaternion targetRotation = palmRotationDelta * _initialRotation;
 
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f));
+            _rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f));
         }
     }
 
@@ -54,14 +53,14 @@ public class SnapPointController : MonoBehaviour
     {
         _palmNormalWhenGrabbed = _landmarkInterpreter.PalmNormal; 
         _initialRotation = transform.rotation;
-        grabbedPoint = sender as SnapPoint;
-        followPoint = snapTo;
+        _grabbedPoint = sender as SnapPoint;
+        _followPoint = snapTo;
         OnPointGrabbed?.Invoke(this, EventArgs.Empty);
     }
     public void OnSnapReleased(object sender, EventArgs args)
     {
-        followPoint = null;
-        grabbedPoint = null;
+        _followPoint = null;
+        _grabbedPoint = null;
         OnPointReleased?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class SnapPoint : MonoBehaviour
 {
-    [SerializeField]    
-    private SnapPointController _controller;
-
     public event EventHandler<Transform> OnGrabbed;
     public event EventHandler OnReleased;
 
+    [SerializeField]    
+    private SnapPointController _controller;
     [SerializeField]
     private MeshRenderer _pointRendererVisual;
 

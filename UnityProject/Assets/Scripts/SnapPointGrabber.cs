@@ -12,10 +12,10 @@ public class SnapPointGrabber : MonoBehaviour
     private MeshRenderer _grabberVisual;
 
     [SerializeField]
-    private Color CollidedColor;
+    private Color _collidedColor;
 
     [SerializeField]
-    private Color CalmColor;
+    private Color _calmColor;
 
     private bool _isHolding;
 
