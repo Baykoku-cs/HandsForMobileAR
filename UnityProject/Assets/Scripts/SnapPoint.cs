@@ -9,6 +9,9 @@ public class SnapPoint : MonoBehaviour
     public event EventHandler<Transform> OnGrabbed;
     public event EventHandler OnReleased;
 
+    [SerializeField]
+    private MeshRenderer _pointRendererVisual;
+
     private void Start()
     {
         if (_controller is null)
@@ -25,4 +28,12 @@ public class SnapPoint : MonoBehaviour
         OnReleased?.Invoke(this, EventArgs.Empty);
     }
 
+    public void Show()
+    {
+        _pointRendererVisual.enabled = true;
+    }
+    public void Hide()
+    {
+        _pointRendererVisual.enabled = false;
+    }
 }

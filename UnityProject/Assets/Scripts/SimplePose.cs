@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 public enum PoseType
 {
     None,
@@ -8,7 +9,8 @@ public enum PoseType
     Thumb_Down,
     Thumb_Up,
     Victory,
-    ILoveYou
+    ILoveYou,
+    Pick
 }
 public enum EventType
 {
@@ -18,7 +20,7 @@ public enum EventType
     OnPoseLost
 }
 
-public class PoseState
+public class SimplePose : IDetectablePose
 {
     public PoseType Type { get; private set; }
 
@@ -37,7 +39,7 @@ public class PoseState
     public bool IsDetected { get; private set; }
     public bool IsPaused { get; private set; }
 
-    public PoseState(PoseType type)
+    public SimplePose(PoseType type)
     {
         Type = type;
     }
@@ -106,5 +108,17 @@ public class PoseState
     public float GetActivationTimerNormalized()
     {
         return _activateTimer / _timeToDetectSeconds;
+    }
+
+    public bool Check(Vector3[] landmarks, string name)
+    {
+        if (Enum.TryParse(name, out PoseType poseType))
+        {
+            return poseType == Type;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

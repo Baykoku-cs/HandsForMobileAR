@@ -29,7 +29,7 @@ public class GestureControls : MonoBehaviour
         _vrMode.ChangeMode();
     }
 
-    private void OnVictoryDetected()
+    public void OnVictoryDetected()
     {
         (landmarkInterpreter.DepthModifier as CameraDepthModifier).Calibrate(landmarkInterpreter.LastRawLandmarks);
     }

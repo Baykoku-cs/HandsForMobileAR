@@ -7,17 +7,13 @@ internal class CameraDepthModifier : MonoBehaviour, IDepthModifier
     [SerializeField] private LandmarkInterpreter _landmarkInterpreter;
 
     private float _calibratedHandSize;
-    private float _zMultiplier;
+    private float _zMultiplier = 1f;
 
     private void Start()
     {
         _landmarkInterpreter.DepthModifier = this;
     }
 
-    public CameraDepthModifier(float zMultiplier = 10f)
-    {
-        _zMultiplier = zMultiplier;
-    }
     public void Calibrate(Vector3[] landmarks)
     {
         _calibratedHandSize = CalculateHandSize(landmarks);

@@ -21,14 +21,14 @@ public class SnapPointGrabber : MonoBehaviour
 
     private void Start()
     {
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Closed_Fist, OnFistDetected);
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Closed_Fist, OnFistLost);
+        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Pick, OnFistDetected);
+        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Pick, OnFistLost);
     }
 
     private void OnDestroy()
     {
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Closed_Fist, OnFistDetected);
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Closed_Fist, OnFistLost);
+        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Pick, OnFistDetected);
+        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Pick, OnFistLost);
     }
 
     private void OnFistDetected()
@@ -58,6 +58,7 @@ public class SnapPointGrabber : MonoBehaviour
         if (other.TryGetComponent<SnapPoint>(out _triggedSnapPoint))
         {
             _grabberVisual.material.color = CollidedColor;
+            _triggedSnapPoint.Show();
         }
     }
 
@@ -67,6 +68,7 @@ public class SnapPointGrabber : MonoBehaviour
         {
             if (other.TryGetComponent<SnapPoint>(out SnapPoint point) && point == _triggedSnapPoint)
             {
+                _triggedSnapPoint.Hide();
                 _triggedSnapPoint = null;
                 _grabberVisual.material.color = CalmColor;
             }

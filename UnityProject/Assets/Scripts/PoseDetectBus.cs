@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,18 +9,25 @@ public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
 {
     [SerializeField] private HandTrackingProvider _handTrackingProvider;
 
-    private PoseState[] _poses;
-    private PoseType _lastPoseType = PoseType.None;
+    private IDetectablePose[] _poses;
+    private IDetectablePose _lastPose;
 
     private void Awake()
     {
         int poseCount = Enum.GetNames(typeof(PoseType)).Length;
-        _poses = new PoseState[poseCount];
+
+        List<IDetectablePose> posesList = new List<IDetectablePose>();
+
+        var pickPose = new PickPose();
 
         for (int i = 0; i < poseCount; i++)
         {
-            _poses[i] = new PoseState((PoseType)i);
+            if ((PoseType)i == PoseType.Pick)
+                posesList.Add(new PickPose());
+            else
+                posesList.Add(new SimplePose((PoseType)i));
         }
+        _poses = posesList.ToArray();
     }
     private void Start()
     {
@@ -57,7 +65,6 @@ public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
                 break;
         }
     }
-
     public void UnSubscribeOnPoseDetected(EventType eventType, PoseType poseType, Action action)
     {
         switch (eventType)
@@ -86,19 +93,18 @@ public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
 
     public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName)
     {
-        if (Enum.TryParse(detectedGestureName, out PoseType newPoseType))
+        foreach (var pose in _poses.Reverse())
         {
-            if (_lastPoseType != newPoseType)
+            if (pose.Check(newLandmarks.ToArray(), detectedGestureName))
             {
-                _poses[(int)_lastPoseType].Pause();
-                _poses[(int)newPoseType].Resume();
-
-                _lastPoseType = newPoseType;
+                if (_lastPose is not null)
+                {
+                    _lastPose.Pause();
+                }
+                pose.Resume();
+                _lastPose = pose;
+                return;
             }
-        }
-        else
-        {
-            Debug.LogWarning($"Unknown pose: {detectedGestureName}");
         }
     }
 }

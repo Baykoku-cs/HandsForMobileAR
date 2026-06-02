@@ -7,7 +7,6 @@ public class GestureVisualizerUI : MonoBehaviour
     [SerializeField] private PoseType _poseType;
     [SerializeField] private PoseDetectBus _poseDetectBus;
 
-
     [SerializeField] private Color YELLOW_COLOR;
     [SerializeField] private Color RED_COLOR;
     [SerializeField] private Color GREEN_COLOR;
