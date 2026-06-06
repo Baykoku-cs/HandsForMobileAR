@@ -1,47 +1,50 @@
-﻿using Assembly_CSharp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using HandsForMobileAR.CoreComponents;
 
-namespace Assets.Scripts
+namespace HandsForMobileAR
 {
-    internal class LandmarkInterpreter : MonoBehaviour, ILandmarkInterpreter
+    namespace DefaultComponents
     {
-        [SerializeField] private HandTrackingProvider _handTrackingProvider;
-        private JitterFilter _filter;
-
-        public IDepthModifier DepthModifier;
-        public Vector3[] LastProcessedLandmarks { get; private set; }
-        public Vector3[] LastRawLandmarks { get; private set; }
-        public Vector3 PalmNormal { get; private set; }
-        public Vector3 PalmCenter { get; private set; }
-
-        private void Awake()
+        internal class LandmarkInterpreter : MonoBehaviour, ILandmarkInterpreter
         {
-            _filter = new JitterFilter(1f);
-        }
-        private void Start()
-        {
-            _handTrackingProvider.LandmarkInterpreter = this;
-        }
+            [SerializeField] private HandTrackingProvider _handTrackingProvider;
+            private JitterFilter _filter;
 
-        public void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider)
-        {
-            LastRawLandmarks = newLandmarks.ToArray();
+            public IDepthModifier DepthModifier;
+            public Vector3[] LastProcessedLandmarks { get; private set; }
+            public Vector3[] LastRawLandmarks { get; private set; }
+            public Vector3 PalmNormal { get; private set; }
+            public Vector3 PalmCenter { get; private set; }
 
-            Vector3[] filteredData = _filter.Filter(newLandmarks.ToArray());
-            DepthModifier.Process(filteredData, imageProvider);
+            private void Awake()
+            {
+                _filter = new JitterFilter(1f);
+            }
+            private void Start()
+            {
+                _handTrackingProvider.LandmarkInterpreter = this;
+            }
 
-            LastProcessedLandmarks = filteredData;
-            RefreshPalmNormalVector();
-        }
+            public void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider)
+            {
+                LastRawLandmarks = newLandmarks.ToArray();
 
-        public void RefreshPalmNormalVector()
-        {
-            var hr = LastProcessedLandmarks[17] - LastProcessedLandmarks[5];
-            var vr = LastProcessedLandmarks[9] - LastProcessedLandmarks[0];
+                Vector3[] filteredData = _filter.Filter(newLandmarks.ToArray());
+                DepthModifier.Process(filteredData, imageProvider);
 
-            PalmNormal = Vector3.Cross(hr, vr).normalized;
-            PalmCenter = (LastProcessedLandmarks[0] + LastProcessedLandmarks[9]) * 0.5f;
+                LastProcessedLandmarks = filteredData;
+                RefreshPalmNormalVector();
+            }
+
+            public void RefreshPalmNormalVector()
+            {
+                var hr = LastProcessedLandmarks[17] - LastProcessedLandmarks[5];
+                var vr = LastProcessedLandmarks[9] - LastProcessedLandmarks[0];
+
+                PalmNormal = Vector3.Cross(hr, vr).normalized;
+                PalmCenter = (LastProcessedLandmarks[0] + LastProcessedLandmarks[9]) * 0.5f;
+            }
         }
     }
 }

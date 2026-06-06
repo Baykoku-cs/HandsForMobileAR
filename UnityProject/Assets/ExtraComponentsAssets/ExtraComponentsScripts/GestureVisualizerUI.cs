@@ -1,41 +1,48 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using HandsForMobileAR.DefaultComponents;
 
-public class GestureVisualizerUI : MonoBehaviour
+namespace HandsForMobileAR
 {
-    [SerializeField] Sprite iconSprite;
-    [SerializeField] private PoseType _poseType;
-    [SerializeField] private PoseDetectBus _poseDetectBus;
+    namespace ExtraComponents
+    {
+        public class GestureVisualizerUI : MonoBehaviour
+        {
+            [SerializeField] Sprite _iconSprite;
+            [SerializeField] private string _poseName;
+            [SerializeField] private PoseDetectBus _poseDetectBus;
 
-    [SerializeField] private Color YELLOW_COLOR;
-    [SerializeField] private Color RED_COLOR;
-    [SerializeField] private Color GREEN_COLOR;
+            [SerializeField] private Color YELLOW_COLOR;
+            [SerializeField] private Color RED_COLOR;
+            [SerializeField] private Color GREEN_COLOR;
 
-    [SerializeField] Image fillImage;
-    [SerializeField] Image iconImage;
+            [SerializeField] Image fillImage;
+            [SerializeField] Image iconImage;
 
-    private void Start()
-    {
-        iconImage.sprite = iconSprite;
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, _poseType, OnPoseDetected);
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetectionStart, _poseType, OnPoseDetectionStart);
-    }
-    private void OnDestroy()
-    {
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, _poseType, OnPoseDetected);
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetectionStart, _poseType, OnPoseDetectionStart);
-    }
-    private void Update()
-    {
-        fillImage.fillAmount = _poseDetectBus.GetPoseDetectTimerNormalized(_poseType);
-    }
+            private void Start()
+            {
+                iconImage.sprite = _iconSprite;
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, _poseName, OnPoseDetected);
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetectionStart, _poseName, OnPoseDetectionStart);
+            }
+            private void OnDestroy()
+            {
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, _poseName, OnPoseDetected);
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetectionStart, _poseName, OnPoseDetectionStart);
+            }
+            private void Update()
+            {
+                fillImage.fillAmount = _poseDetectBus.GetPoseDetectTimerNormalized(_poseName);
+            }
 
-    private void OnPoseDetected()
-    {
-        fillImage.color = GREEN_COLOR;
-    }
-    private void OnPoseDetectionStart()
-    {
-        fillImage.color = YELLOW_COLOR;
+            private void OnPoseDetected()
+            {
+                fillImage.color = GREEN_COLOR;
+            }
+            private void OnPoseDetectionStart()
+            {
+                fillImage.color = YELLOW_COLOR;
+            }
+        }
     }
 }

@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 
-public class ColorButton : MonoBehaviour
+namespace HandsForMobileAR
 {
-    [SerializeField]
-    public Color Color;
+    namespace DrawerSample
+    {
+        public class ColorButton : MonoBehaviour
+        {
+            [SerializeField]
+            public Color Color;
+        }
+    }
 }

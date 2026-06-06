@@ -212,6 +212,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: ILoveYou
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 7
       objectReference: {fileID: 0}
@@ -223,6 +227,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8e7f6bba38c739a45bc88ffab7d54f88, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -652,6 +660,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Open_Palm
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 2
       objectReference: {fileID: 0}
@@ -663,6 +675,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 92f5f68c465030d4688f6cd44ddc82cb, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -871,6 +887,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Closed_Fist
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 1
       objectReference: {fileID: 0}
@@ -882,6 +902,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2b4255f7293f83e428bb3de7511a2483, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -1615,6 +1639,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Thumb_Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 4
       objectReference: {fileID: 0}
@@ -1626,6 +1654,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: df4577ce16b22aa4584c02374259339c, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -2206,6 +2238,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Pointing_Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 3
       objectReference: {fileID: 0}
@@ -2217,6 +2253,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 33c9c529b4159bb40ad19cafda2986c5, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -3097,6 +3137,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Victory
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 6
       objectReference: {fileID: 0}
@@ -3108,6 +3152,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f91c81e7940a994448d11472251f8b3f, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1
@@ -3454,6 +3502,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _poseName
+      value: Thumb_Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: _poseType
       value: 5
       objectReference: {fileID: 0}
@@ -3465,6 +3517,10 @@ PrefabInstance:
       propertyPath: RED_COLOR.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
+      propertyPath: _iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e81e4a47c8e71164a99b408c6056b23b, type: 3}
     - target: {fileID: 8456116819879284611, guid: c474eb898d9ce1b4e971c86d6f8c32ca, type: 3}
       propertyPath: GREEN_COLOR.a
       value: 1

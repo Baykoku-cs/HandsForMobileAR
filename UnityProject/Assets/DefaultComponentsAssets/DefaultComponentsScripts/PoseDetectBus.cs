@@ -1,110 +1,137 @@
-﻿using Assets.Scripts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using HandsForMobileAR.CoreComponents;
 
-public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
+namespace HandsForMobileAR
 {
-    [SerializeField] private HandTrackingProvider _handTrackingProvider;
-
-    private IDetectablePose[] _poses;
-    private IDetectablePose _lastPose;
-
-    private void Awake()
+    namespace DefaultComponents
     {
-        int poseCount = Enum.GetNames(typeof(PoseType)).Length;
-
-        List<IDetectablePose> posesList = new List<IDetectablePose>();
-
-        var pickPose = new PickPose();
-
-        for (int i = 0; i < poseCount; i++)
+        public enum DefaultPoseNames
         {
-            if ((PoseType)i == PoseType.Pick)
-                posesList.Add(new PickPose());
-            else
-                posesList.Add(new SimplePose((PoseType)i));
+            None,
+            Closed_Fist,
+            Open_Palm,
+            Pointing_Up,
+            Thumb_Down,
+            Thumb_Up,
+            Victory,
+            ILoveYou
         }
-        _poses = posesList.ToArray();
-    }
-    private void Start()
-    {
-        _handTrackingProvider.GestureInterpreter = this;
-    }
-    private void Update()
-    {
-        float dt = Time.deltaTime;
-        for (int i = 0; i < _poses.Length; i++)
+
+        public enum EventType
         {
-            _poses[i].Tick(dt);
+            OnPoseDetectionStart,
+            OnPoseDetected,
+            OnPoseCanceled,
+            OnPoseLost
         }
-    }
-
-    public void SubscribeOnPoseDetected(EventType eventType, PoseType poseType, UnityAction action)
-    {
-        switch (eventType)
+        public class PoseDetectBus : MonoBehaviour, IGestureInterpreter
         {
-            case EventType.OnPoseDetectionStart:
-                _poses[(int)poseType].OnPoseDetectionStart += (s, e) => action();
-                break;
+            [SerializeField] private HandTrackingProvider _handTrackingProvider;
 
-            case EventType.OnPoseLost:
-                _poses[(int)poseType].OnPoseLost += (s, e) => action();
-                break;
+            private Dictionary<string, IDetectablePose> _poses = new Dictionary<string, IDetectablePose>();
+            private IDetectablePose _lastPose;
 
-            case EventType.OnPoseDetected:
-                {
-                    _poses[(int)poseType].OnPoseDetected += (s, e) => action();
-                    break;
-                }
-
-            case EventType.OnPoseCanceled:
-                _poses[(int)poseType].OnPoseCanceled += (s, e) => action();
-                break;
-        }
-    }
-    public void UnSubscribeOnPoseDetected(EventType eventType, PoseType poseType, Action action)
-    {
-        switch (eventType)
-        {
-            case EventType.OnPoseDetectionStart:
-                _poses[(int)poseType].OnPoseDetectionStart -= (s, e) => action();
-                break;
-
-            case EventType.OnPoseLost:
-                _poses[(int)poseType].OnPoseLost -= (s, e) => action();
-                break;
-
-            case EventType.OnPoseDetected:
-                _poses[(int)poseType].OnPoseDetected -= (s, e) => action();
-                break;
-
-            case EventType.OnPoseCanceled:
-                _poses[(int)poseType].OnPoseCanceled -= (s, e) => action();
-                break;
-        }
-    }
-    public float GetPoseDetectTimerNormalized(PoseType poseType)
-    {
-        return _poses[(int)poseType].GetActivationTimerNormalized();
-    }
-
-    public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName)
-    {
-        foreach (var pose in _poses.Reverse())
-        {
-            if (pose.Check(newLandmarks.ToArray(), detectedGestureName))
+            private void Awake()
             {
-                if (_lastPose is not null)
+                RegisterPose("Closed_Fist", new SimplePose("Closed_Fist"));
+                RegisterPose("Open_Palm",   new SimplePose("Open_Palm"));
+                RegisterPose("Pointing_Up", new SimplePose("Pointing_Up"));
+                RegisterPose("Thumb_Down",  new SimplePose("Thumb_Down"));
+                RegisterPose("Thumb_Up",    new SimplePose("Thumb_Up"));
+                RegisterPose("Victory",     new SimplePose("Victory"));
+                RegisterPose("ILoveYou",    new SimplePose("ILoveYou"));
+            }
+            private void Start()
+            {
+                _handTrackingProvider.GestureInterpreter = this;
+            }
+            private void Update()
+            {
+                float dt = Time.deltaTime;
+                foreach (var pose in _poses.Values)
                 {
-                    _lastPose.Pause();
+                    pose.Tick(dt);
                 }
-                pose.Resume();
-                _lastPose = pose;
-                return;
+            }
+
+            public void RegisterPose(string poseName, IDetectablePose pose)
+            {
+                _poses[poseName] = pose;
+            }
+            public void UnRegisterPose(string poseName)
+            {
+                _poses.Remove(poseName);
+            }
+
+            public void SubscribeOnPoseDetected(EventType eventType, string poseName, UnityAction action)
+            {
+                switch (eventType)
+                {
+                    case EventType.OnPoseDetectionStart:
+                        _poses[poseName].OnPoseDetectionStart += (s, e) => action();
+                        break;
+
+                    case EventType.OnPoseLost:
+                        _poses[poseName].OnPoseLost += (s, e) => action();
+                        break;
+
+                    case EventType.OnPoseDetected:
+                        {
+                            _poses[poseName].OnPoseDetected += (s, e) => action();
+                            break;
+                        }
+
+                    case EventType.OnPoseCanceled:
+                        _poses[poseName].OnPoseCanceled += (s, e) => action();
+                        break;
+                }
+            }
+            public void UnSubscribeOnPoseDetected(EventType eventType, string poseName, Action action)
+            {
+                switch (eventType)
+                {
+                    case EventType.OnPoseDetectionStart:
+                        _poses[poseName].OnPoseDetectionStart -= (s, e) => action();
+                        break;
+
+                    case EventType.OnPoseLost:
+                        _poses[poseName].OnPoseLost -= (s, e) => action();
+                        break;
+
+                    case EventType.OnPoseDetected:
+                        _poses[poseName].OnPoseDetected -= (s, e) => action();
+                        break;
+
+                    case EventType.OnPoseCanceled:
+                        _poses[poseName].OnPoseCanceled -= (s, e) => action();
+                        break;
+                }
+            }
+            public float GetPoseDetectTimerNormalized(string poseName)
+            {
+                return _poses[poseName].GetActivationTimerNormalized();
+            }
+
+            public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName)
+            {
+                foreach (var pose in _poses.Values.Reverse())
+                {
+                    if (pose.Check(newLandmarks.ToArray(), detectedGestureName))
+                    {
+                        if (_lastPose is not null)
+                        {
+                            _lastPose.Pause();
+                        }
+                        pose.Resume();
+                        _lastPose = pose;
+                        return;
+                    }
+                }
             }
         }
-    }
+    }   
 }

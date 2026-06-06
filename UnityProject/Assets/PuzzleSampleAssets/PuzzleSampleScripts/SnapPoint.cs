@@ -1,38 +1,44 @@
 ﻿using System;
 using UnityEngine;
 
-public class SnapPoint : MonoBehaviour
+namespace HandsForMobileAR
 {
-    public event EventHandler<Transform> OnGrabbed;
-    public event EventHandler OnReleased;
+    namespace PuzzleSampleComponents
+    {
+        public class SnapPoint : MonoBehaviour
+        {
+            public event EventHandler<Transform> OnGrabbed;
+            public event EventHandler OnReleased;
 
-    [SerializeField]    
-    private SnapPointController _controller;
-    [SerializeField]
-    private MeshRenderer _pointRendererVisual;
+            [SerializeField]
+            private SnapPointController _controller;
+            [SerializeField]
+            private MeshRenderer _pointRendererVisual;
 
-    private void Start()
-    {
-        if (_controller is null)
-            Debug.LogError("Snap point without controller");
-        _controller.SubscribeSnapPoint(this);
-    }
+            private void Start()
+            {
+                if (_controller is null)
+                    Debug.LogError("Snap point without controller");
+                _controller.SubscribeSnapPoint(this);
+            }
 
-    public void Snap(Transform snapTo)
-    {
-        OnGrabbed?.Invoke(this, snapTo);
-    }
-    public void UnSnap()
-    {
-        OnReleased?.Invoke(this, EventArgs.Empty);
-    }
+            public void Snap(Transform snapTo)
+            {
+                OnGrabbed?.Invoke(this, snapTo);
+            }
+            public void UnSnap()
+            {
+                OnReleased?.Invoke(this, EventArgs.Empty);
+            }
 
-    public void Show()
-    {
-        _pointRendererVisual.enabled = true;
-    }
-    public void Hide()
-    {
-        _pointRendererVisual.enabled = false;
+            public void Show()
+            {
+                _pointRendererVisual.enabled = true;
+            }
+            public void Hide()
+            {
+                _pointRendererVisual.enabled = false;
+            }
+        }
     }
 }

@@ -1,10 +1,12 @@
-﻿using Assets.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets
+namespace HandsForMobileAR
 {
-    internal interface IDepthModifier
+    namespace CoreComponents
     {
-        public void Process(Vector3[] landmarks, IImageProvider imageProvider);
+        internal interface IDepthModifier
+        {
+            public void Process(Vector3[] landmarks, IImageProvider imageProvider);
+        }
     }
 }

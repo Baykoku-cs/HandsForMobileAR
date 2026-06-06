@@ -1,76 +1,79 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using HandsForMobileAR.DefaultComponents;
 
-public class SnapPointGrabber : MonoBehaviour
+namespace HandsForMobileAR
 {
-    [SerializeField]
-    private PoseDetectBus _poseDetectBus;
-
-    private SnapPoint _triggedSnapPoint;
-
-    [SerializeField]
-    private MeshRenderer _grabberVisual;
-
-    [SerializeField]
-    private Color _collidedColor;
-
-    [SerializeField]
-    private Color _calmColor;
-
-    private bool _isHolding;
-
-    private void Start()
+    namespace PuzzleSampleComponents
     {
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Pick, OnFistDetected);
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Pick, OnFistLost);
-    }
-
-    private void OnDestroy()
-    {
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Pick, OnFistDetected);
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseLost, PoseType.Pick, OnFistLost);
-    }
-
-    private void OnFistDetected()
-    {
-        if (_triggedSnapPoint is not null)
+        public class SnapPointGrabber : MonoBehaviour
         {
-            _triggedSnapPoint?.Snap(transform);
-            _isHolding = true;
-        }
-    }
-    private void OnFistLost()
-    {
-        if (_triggedSnapPoint is not null && _isHolding)
-        {
-            _triggedSnapPoint?.UnSnap();
-            _triggedSnapPoint = null;
-            _grabberVisual.material.color = _calmColor;
-            _isHolding = false;
-        }
-    }
+            [SerializeField] private PoseDetectBus _poseDetectBus;
+            [SerializeField] private MeshRenderer _grabberVisual;
+            [SerializeField] private Color _collidedColor;
+            [SerializeField] private Color _calmColor;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_triggedSnapPoint != null)
-            return;
+            private SnapPoint _triggedSnapPoint;
+            
+            private bool _isHolding;
 
-        if (other.TryGetComponent<SnapPoint>(out _triggedSnapPoint))
-        {
-            _grabberVisual.material.color = _collidedColor;
-            _triggedSnapPoint.Show();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!_isHolding)
-        {
-            if (other.TryGetComponent<SnapPoint>(out SnapPoint point) && point == _triggedSnapPoint)
+            private void Awake()
             {
-                _triggedSnapPoint.Hide();
-                _triggedSnapPoint = null;
-                _grabberVisual.material.color = _calmColor;
+                _poseDetectBus.RegisterPose("Pick", new PickPose());
+            }
+            private void Start()
+            {
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, "Pick", OnFistDetected);
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseLost, "Pick", OnFistLost);
+            }
+
+            private void OnDestroy()
+            {
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, "Pick", OnFistDetected);
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseLost, "Pick", OnFistLost);
+            }
+
+            private void OnFistDetected()
+            {
+                if (_triggedSnapPoint is not null)
+                {
+                    _triggedSnapPoint?.Snap(transform);
+                    _isHolding = true;
+                }
+            }
+            private void OnFistLost()
+            {
+                if (_triggedSnapPoint is not null && _isHolding)
+                {
+                    _triggedSnapPoint?.UnSnap();
+                    _triggedSnapPoint = null;
+                    _grabberVisual.material.color = _calmColor;
+                    _isHolding = false;
+                }
+            }
+
+            private void OnTriggerEnter(Collider other)
+            {
+                if (_triggedSnapPoint != null)
+                    return;
+
+                if (other.TryGetComponent(out _triggedSnapPoint))
+                {
+                    _grabberVisual.material.color = _collidedColor;
+                    _triggedSnapPoint.Show();
+                }
+            }
+
+            private void OnTriggerExit(Collider other)
+            {
+                if (!_isHolding)
+                {
+                    if (other.TryGetComponent(out SnapPoint point) && point == _triggedSnapPoint)
+                    {
+                        _triggedSnapPoint.Hide();
+                        _triggedSnapPoint = null;
+                        _grabberVisual.material.color = _calmColor;
+                    }
+                }
             }
         }
     }

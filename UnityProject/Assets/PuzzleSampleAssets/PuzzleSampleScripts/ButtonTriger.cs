@@ -1,34 +1,39 @@
-﻿using Assets.Scripts;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class ButtonTriger : MonoBehaviour
+namespace HandsForMobileAR
 {
-    [SerializeField]
-    private PuzzlePeace[] _puzzles;
-
-    private float _buttonReloadTime = 0.5f;
-    private bool _isReloading;
-
-    private void OnTriggerEnter(Collider other)
+    namespace PuzzleSampleComponents
     {
-        if (!_isReloading && other.CompareTag("Button"))
+        public class ButtonTriger : MonoBehaviour
         {
-            Debug.Log("ResetButtonTriggered");
-            other.GetComponent<Animator>().SetTrigger("Click");
-            foreach (var puzzle in _puzzles)
+            [SerializeField]
+            private PuzzlePeace[] _puzzles;
+
+            private float _buttonReloadTime = 0.5f;
+            private bool _isReloading;
+
+            private void OnTriggerEnter(Collider other)
             {
-                puzzle.ResetPosition();
+                if (!_isReloading && other.CompareTag("Button"))
+                {
+                    Debug.Log("ResetButtonTriggered");
+                    other.GetComponent<Animator>().SetTrigger("Click");
+                    foreach (var puzzle in _puzzles)
+                    {
+                        puzzle.ResetPosition();
+                    }
+
+                    StartCoroutine(ReloadCorourine());
+                }
             }
 
-            StartCoroutine(ReloadCorourine());
+            private IEnumerator ReloadCorourine()
+            {
+                _isReloading = true;
+                yield return new WaitForSeconds(_buttonReloadTime);
+                _isReloading = false;
+            }
         }
-    }
-
-    private IEnumerator ReloadCorourine()
-    {
-        _isReloading = true;
-        yield return new WaitForSeconds(_buttonReloadTime);
-        _isReloading = false;
     }
 }

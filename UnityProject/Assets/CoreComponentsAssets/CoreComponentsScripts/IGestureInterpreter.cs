@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace HandsForMobileAR
 {
-    internal interface IGestureInterpreter
+    namespace CoreComponents
     {
-        public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName);
+        internal interface IGestureInterpreter
+        {
+            public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName);
+        }
     }
 }

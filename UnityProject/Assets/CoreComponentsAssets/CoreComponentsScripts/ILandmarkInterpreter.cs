@@ -1,11 +1,13 @@
-﻿using Assets.Scripts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assembly_CSharp
+namespace HandsForMobileAR
 {
-    internal interface ILandmarkInterpreter
+    namespace CoreComponents
     {
-        public void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider);
+        internal interface ILandmarkInterpreter
+        {
+            public void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider);
+        }
     }
 }

@@ -1,36 +1,42 @@
-﻿using Assets.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
+using HandsForMobileAR.DefaultComponents;
 
-public class GestureControls : MonoBehaviour
+namespace HandsForMobileAR
 {
-    [SerializeField]
-    private VrMode _vrMode;
-
-    [SerializeField]
-    private LandmarkInterpreter landmarkInterpreter;
-
-    [SerializeField]
-    private PoseDetectBus _poseDetectBus;
-    
-    private void Start()
+    namespace ExtraComponents
     {
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Victory, OnVictoryDetected);
-        _poseDetectBus.SubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.ILoveYou, OnLoveYouDetected);
-    }
+        public class GestureControls : MonoBehaviour
+        {
+            [SerializeField]
+            private VrMode _vrMode;
 
-    private void OnDestroy()
-    {
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.Victory, OnVictoryDetected);
-        _poseDetectBus.UnSubscribeOnPoseDetected(EventType.OnPoseDetected, PoseType.ILoveYou, OnLoveYouDetected);
-    }
+            [SerializeField]
+            private LandmarkInterpreter landmarkInterpreter;
 
-    private void OnLoveYouDetected()
-    {
-        _vrMode.ChangeMode();
-    }
+            [SerializeField]
+            private PoseDetectBus _poseDetectBus;
 
-    public void OnVictoryDetected()
-    {
-        (landmarkInterpreter.DepthModifier as CameraDepthModifier).Calibrate(landmarkInterpreter.LastRawLandmarks);
+            private void Start()
+            {
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, DefaultPoseNames.Victory.ToString(), OnVictoryDetected);
+                _poseDetectBus.SubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, DefaultPoseNames.ILoveYou.ToString(), OnLoveYouDetected);
+            }
+
+            private void OnDestroy()
+            {
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, DefaultPoseNames.Victory.ToString(), OnVictoryDetected);
+                _poseDetectBus.UnSubscribeOnPoseDetected(DefaultComponents.EventType.OnPoseDetected, DefaultPoseNames.ILoveYou.ToString(), OnLoveYouDetected);
+            }
+
+            private void OnLoveYouDetected()
+            {
+                _vrMode.ChangeMode();
+            }
+
+            public void OnVictoryDetected()
+            {
+                (landmarkInterpreter.DepthModifier as CameraDepthModifier).Calibrate(landmarkInterpreter.LastRawLandmarks);
+            }
+        }
     }
 }

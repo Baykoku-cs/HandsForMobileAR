@@ -1,7 +1,10 @@
-﻿namespace Assets.Scripts
+﻿namespace HandsForMobileAR
 {
-    internal interface IImageProvider
+    namespace CoreComponents
     {
-        public bool TryGetLastImage(out Mediapipe.Image image);
+        public interface IImageProvider
+        {
+            public bool TryGetLastImage(out Mediapipe.Image image);
+        }
     }
 }
