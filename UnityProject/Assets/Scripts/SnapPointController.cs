@@ -15,6 +15,9 @@ public class SnapPointController : MonoBehaviour
     private Vector3 _palmNormalWhenGrabbed; 
     private Quaternion _initialRotation;
 
+
+    public bool IsGrabbed { get; private set; }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -29,7 +32,7 @@ public class SnapPointController : MonoBehaviour
 
             Quaternion palmRotationDelta = Quaternion.FromToRotation(
                 _palmNormalWhenGrabbed,
-                _landmarkInterpreter.PalmNormal
+                GetVectorFromLandmarker(_landmarkInterpreter)
             );
             Quaternion targetRotation = palmRotationDelta * _initialRotation;
 
@@ -51,16 +54,27 @@ public class SnapPointController : MonoBehaviour
 
     public void OnSnapGrabbed(object sender, Transform snapTo)
     {
-        _palmNormalWhenGrabbed = _landmarkInterpreter.PalmNormal; 
+        _palmNormalWhenGrabbed = GetVectorFromLandmarker(_landmarkInterpreter); 
+
         _initialRotation = transform.rotation;
         _grabbedPoint = sender as SnapPoint;
         _followPoint = snapTo;
+        IsGrabbed = true;
         OnPointGrabbed?.Invoke(this, EventArgs.Empty);
     }
     public void OnSnapReleased(object sender, EventArgs args)
     {
         _followPoint = null;
         _grabbedPoint = null;
+        IsGrabbed = false;
         OnPointReleased?.Invoke(this, EventArgs.Empty);
+    }
+
+    private Vector3 GetVectorFromLandmarker(LandmarkInterpreter landmarkInterpreter)
+    {
+        return _landmarkInterpreter.PalmNormal;
+
+        // var defVector = _landmarkInterpreter.LastProcessedLandmarks[8] - _landmarkInterpreter.LastProcessedLandmarks[4];
+        // return defVector.normalized;
     }
 }

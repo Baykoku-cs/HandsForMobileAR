@@ -45,7 +45,7 @@ public class SnapPointGrabber : MonoBehaviour
         {
             _triggedSnapPoint?.UnSnap();
             _triggedSnapPoint = null;
-            _grabberVisual.material.color = CalmColor;
+            _grabberVisual.material.color = _calmColor;
             _isHolding = false;
         }
     }
@@ -57,7 +57,7 @@ public class SnapPointGrabber : MonoBehaviour
 
         if (other.TryGetComponent<SnapPoint>(out _triggedSnapPoint))
         {
-            _grabberVisual.material.color = CollidedColor;
+            _grabberVisual.material.color = _collidedColor;
             _triggedSnapPoint.Show();
         }
     }
@@ -70,7 +70,7 @@ public class SnapPointGrabber : MonoBehaviour
             {
                 _triggedSnapPoint.Hide();
                 _triggedSnapPoint = null;
-                _grabberVisual.material.color = CalmColor;
+                _grabberVisual.material.color = _calmColor;
             }
         }
     }

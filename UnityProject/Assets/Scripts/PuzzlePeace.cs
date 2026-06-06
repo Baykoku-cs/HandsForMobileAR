@@ -8,10 +8,19 @@ namespace Assets.Scripts
         private SnapPointController _snapPointController;
         private Rigidbody _rb;
 
+        private bool _isSnapped;
+
+        [SerializeField] private Transform _spawnPoint;
+
         private void Awake()
         {
             _snapPointController = GetComponent<SnapPointController>();
             _rb = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            ResetPosition();
         }
 
         private void OnEnable()
@@ -28,35 +37,79 @@ namespace Assets.Scripts
 
         private void OnGrabbed(object sender, EventArgs args)
         {
+            if (_isSnapped)
+            {
+                DetachFromSlot();
+            }
+
             _rb.isKinematic = true;
+            _rb.useGravity = false; 
         }
 
         private void OnReleased(object sender, EventArgs args)
         {
-            if (transform.parent is null)
+            if (!_isSnapped)
             {
                 _rb.isKinematic = false;
+                _rb.useGravity = true;
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("PuzzleSlot") && other.transform != transform.parent)
+            if (!other.CompareTag("PuzzleSlot")) return;
+            if (_isSnapped) return;
+
+            if (Vector3.Distance(transform.position, other.transform.position) < 0.2f)
             {
-                _snapPointController.OnSnapReleased(this, EventArgs.Empty);
-                _rb.isKinematic = true;
-                transform.position = other.transform.position - other.transform.forward * 0.01f;
-                transform.parent = other.transform;
-                transform.forward = other.transform.forward;
+                SnapToSlot(other.transform);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            if (!other.CompareTag("PuzzleSlot")) return;
+            if (!_isSnapped) return;
+
             if (other.transform == transform.parent)
             {
-                Debug.Log("Puzzle out of slot");
-                transform.parent = null;
+                DetachFromSlot();
+
+                if (!_snapPointController.IsGrabbed)
+                {
+                    _rb.isKinematic = false;
+                    _rb.useGravity = true;
+                }
+            }
+        }
+
+
+        private void SnapToSlot(Transform slot)
+        {
+            _isSnapped = true;
+            _rb.isKinematic = true;
+            _rb.useGravity = false;
+
+            transform.position = slot.position - slot.forward * 0.01f;
+            transform.forward = slot.forward;
+            transform.parent = slot;
+            transform.localRotation = Quaternion.identity;
+
+            _snapPointController.OnSnapReleased(this, EventArgs.Empty);
+        }
+
+        private void DetachFromSlot()
+        {
+            _isSnapped = false;
+            transform.parent = null;
+        }
+
+        public void ResetPosition()
+        {
+            if (!_isSnapped)
+            {
+                _rb.linearVelocity = Vector3.zero;
+                transform.position = _spawnPoint.position + Vector3.one * UnityEngine.Random.value * 0.1f;
             }
         }
     }
