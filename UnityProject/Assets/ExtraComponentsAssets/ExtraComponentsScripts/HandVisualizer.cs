@@ -67,7 +67,19 @@ namespace HandsForMobileAR
                     }
                 }
             }
-
+            private IEnumerator DelayedHideHands()
+            {
+                yield return new WaitForSeconds(3);
+                _isRecentlyUpdated = false;
+                HideHands();
+            }
+            private void HideHands()
+            {
+                foreach (var sphere in _spheres)
+                {
+                    sphere.gameObject.SetActive(false);
+                }
+            }
             public void SendNewLandMarks(Vector3[] landmarkVectors)
             {
                 for (int i = 0; i < landmarkVectors.Length; i++)
@@ -85,20 +97,6 @@ namespace HandsForMobileAR
                     StopCoroutine(_hideHandsDelayedCoroutine);
 
                 _hideHandsDelayedCoroutine = StartCoroutine(DelayedHideHands());
-            }
-
-            private IEnumerator DelayedHideHands()
-            {
-                yield return new WaitForSeconds(3);
-                _isRecentlyUpdated = false;
-                HideHands();
-            }
-            private void HideHands()
-            {
-                foreach (var sphere in _spheres)
-                {
-                    sphere.gameObject.SetActive(false);
-                }
             }
         }
     }
