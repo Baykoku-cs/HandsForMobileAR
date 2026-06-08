@@ -5,7 +5,7 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
-        internal interface IGestureInterpreter
+        public interface IGestureInterpreter
         {
             public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName);
         }

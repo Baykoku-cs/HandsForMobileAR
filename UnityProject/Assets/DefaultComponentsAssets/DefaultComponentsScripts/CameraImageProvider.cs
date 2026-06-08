@@ -78,14 +78,14 @@ namespace HandsForMobileAR
                 return _textureToProcess;
             }
 
-            public bool TryGetLastImage(out Image image)
+            public bool TryGetLastImage(out Texture2D image)
             {
                 image = null;
 
                 var isImageExist = _manager.TryAcquireLatestCpuImage(out XRCpuImage cpuImage);
                 if (isImageExist)
                 {
-                    image = new Image(GetTexture2DFromCpuImage(cpuImage));
+                    image = GetTexture2DFromCpuImage(cpuImage);
                     return isImageExist;
                 }
 

@@ -13,7 +13,8 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
-        internal class HandTrackingProvider : MonoBehaviour
+
+        public class HandTrackingProvider : MonoBehaviour
         {
             [SerializeField] private ModelMode _modelMode = ModelMode.GestureRecognition;
             [SerializeField] private TextAsset _model;
@@ -116,8 +117,9 @@ namespace HandsForMobileAR
             }
             private void GenerateLandmarks()
             {
-                if (ImageProvider.TryGetLastImage(out Mediapipe.Image image))
+                if (ImageProvider.TryGetLastImage(out Texture2D texture))
                 {
+                    var image = new Mediapipe.Image(texture);
                     if (_taskApi is HandLandmarker)
                     {
                         (_taskApi as HandLandmarker).DetectAsync(image, _stopwatch.ElapsedMilliseconds);

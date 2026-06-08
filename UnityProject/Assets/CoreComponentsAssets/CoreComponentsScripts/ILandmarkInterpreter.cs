@@ -5,7 +5,7 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
-        internal interface ILandmarkInterpreter
+        public interface ILandmarkInterpreter
         {
             public void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider);
         }
