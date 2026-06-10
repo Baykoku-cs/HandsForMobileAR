@@ -1,0 +1,554 @@
+{
+  "source_base_path": "C:/Users/wasya/Desktop/Диплом/DocFXProject",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode.yml\" sourcestartlinenumber=\"1\">Mediapipe model options</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.HandTrackingProvider",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.HandTrackingProvider.yml\" sourcestartlinenumber=\"1\">Core class that handles all Mediapipe related logic</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.IDepthModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.IDepthModifier.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.IDepthModifier",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.IDepthModifier.yml\" sourcestartlinenumber=\"1\">Interface for a class whose main goal is to transform normalized hand landmarks into world coordinates</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.IGestureInterpreter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.IGestureInterpreter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.IGestureInterpreter",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.IGestureInterpreter.yml\" sourcestartlinenumber=\"1\">Interface for a class that will handle all gesture feed from ML model</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.IImageProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.IImageProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.IImageProvider",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.IImageProvider.yml\" sourcestartlinenumber=\"1\">Interface for a class that will provide image feed for mediapipe model</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.ILandmarkInterpreter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.ILandmarkInterpreter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents.ILandmarkInterpreter",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.CoreComponents.ILandmarkInterpreter.yml\" sourcestartlinenumber=\"1\">Interface for a class that will handle all landmarks feed from ML model</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.CoreComponents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.CoreComponents.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.CoreComponents",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.CameraDepthModifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.CameraDepthModifier.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.CameraDepthModifier",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.DefaultComponents.CameraDepthModifier.yml\" sourcestartlinenumber=\"1\">This class goal is to convert normalized landmarks into world-position.\nIt hardly depend on CameraImageProvider</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.CameraImageProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.CameraImageProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.CameraImageProvider",
+      "Summary": "<p sourcefile=\"api/HandsForMobileAR.DefaultComponents.CameraImageProvider.yml\" sourcestartlinenumber=\"1\">This class goal is to provide image feed to HandTrackingProvider</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.DefaultPoseNames.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.DefaultPoseNames.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.DefaultPoseNames",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.EventType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.EventType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.EventType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.IDetectablePose.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.IDetectablePose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.IDetectablePose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.JitterFilter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.JitterFilter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.JitterFilter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.PoseDetectBus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.PoseDetectBus.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.PoseDetectBus",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.SimplePose.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.SimplePose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents.SimplePose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DefaultComponents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DefaultComponents.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DefaultComponents",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DrawerSample.ColorButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DrawerSample.ColorButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DrawerSample.ColorButton",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DrawerSample.ColorPicker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DrawerSample.ColorPicker.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DrawerSample.ColorPicker",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DrawerSample.TouchFinger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DrawerSample.TouchFinger.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DrawerSample.TouchFinger",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DrawerSample.TubeDrawer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DrawerSample.TubeDrawer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DrawerSample.TubeDrawer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.DrawerSample.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.DrawerSample.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.DrawerSample",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.ExtraComponents.GestureControls.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.ExtraComponents.GestureControls.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.ExtraComponents.GestureControls",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.ExtraComponents.GestureVisualizerUI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.ExtraComponents.GestureVisualizerUI.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.ExtraComponents.GestureVisualizerUI",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.ExtraComponents.HandVisualizer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.ExtraComponents.HandVisualizer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.ExtraComponents.HandVisualizer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.ExtraComponents.VrMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.ExtraComponents.VrMode.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.ExtraComponents.VrMode",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.ExtraComponents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.ExtraComponents.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.ExtraComponents",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.ButtonTriger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.ButtonTriger.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.ButtonTriger",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.GestureControlPuzzlesTMP.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.GestureControlPuzzlesTMP.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.GestureControlPuzzlesTMP",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.PickPose.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.PickPose.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.PickPose",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.PuzzlePeace.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.PuzzlePeace.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.PuzzlePeace",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPoint.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPoint.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.SnapPoint",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointController.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.SnapPointController",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointGrabber.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointGrabber.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents.SnapPointGrabber",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/HandsForMobileAR.PuzzleSampleComponents.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "HandsForMobileAR.PuzzleSampleComponents",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Walkthrough.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Walkthrough.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
