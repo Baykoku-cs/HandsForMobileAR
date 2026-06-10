@@ -1,0 +1,182 @@
+{
+  "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.ModelMode.html",
+    "title": "Enum HandTrackingProvider.ModelMode | HandsForMobileAR",
+    "summary": "Enum HandTrackingProvider.ModelMode Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Mediapipe model options public enum HandTrackingProvider.ModelMode Fields GestureRecognition = 1 This mode uses Gesture Recognition model that is enhanced version of Hand Landmark model. Adds embeding and classification models into computation pipeline. LandmarksOnly = 0 There will be only Hand Landmark model running. So there will be no gesture-related date. You can use this to improve application performance in case you don't need gestures."
+  },
+  "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.HandTrackingProvider.html",
+    "title": "Class HandTrackingProvider | HandsForMobileAR",
+    "summary": "Class HandTrackingProvider Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Core class that handles all Mediapipe related logic public class HandTrackingProvider : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour HandTrackingProvider Fields GestureInterpreter Property for implementation of IGestureInterpreter public IGestureInterpreter GestureInterpreter Field Value IGestureInterpreter ImageProvider Property for implementation of IImageProvider public IImageProvider ImageProvider Field Value IImageProvider LandmarkInterpreter Property for implementation of ILandmarkIntepreter public ILandmarkInterpreter LandmarkInterpreter Field Value ILandmarkInterpreter"
+  },
+  "api/HandsForMobileAR.CoreComponents.IDepthModifier.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.IDepthModifier.html",
+    "title": "Interface IDepthModifier | HandsForMobileAR",
+    "summary": "Interface IDepthModifier Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Interface for a class whose main goal is to transform normalized hand landmarks into world coordinates public interface IDepthModifier Methods Process(Vector3[], IImageProvider) Converts normalized landmarks into world-position void Process(Vector3[] landmarks, IImageProvider imageProvider) Parameters landmarks Vector3[] Normalized landmarks imageProvider IImageProvider Image provider that was source of image that was used to get landmarks"
+  },
+  "api/HandsForMobileAR.CoreComponents.IGestureInterpreter.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.IGestureInterpreter.html",
+    "title": "Interface IGestureInterpreter | HandsForMobileAR",
+    "summary": "Interface IGestureInterpreter Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Interface for a class that will handle all gesture feed from ML model public interface IGestureInterpreter Methods OnNewGestureGenerated(List<Vector3>, string) This function will by invoked by HandTrackingProvider after new landmark and gesturename recived from mediapipe void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName) Parameters newLandmarks List<Vector3> detectedGestureName string"
+  },
+  "api/HandsForMobileAR.CoreComponents.IImageProvider.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.IImageProvider.html",
+    "title": "Interface IImageProvider | HandsForMobileAR",
+    "summary": "Interface IImageProvider Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Interface for a class that will provide image feed for mediapipe model public interface IImageProvider Methods TryGetLastImage(out Texture2D) Via this function HandTrackingProvider will get image feed for mediapipe bool TryGetLastImage(out Texture2D image) Parameters image Texture2D Returns bool"
+  },
+  "api/HandsForMobileAR.CoreComponents.ILandmarkInterpreter.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.ILandmarkInterpreter.html",
+    "title": "Interface ILandmarkInterpreter | HandsForMobileAR",
+    "summary": "Interface ILandmarkInterpreter Namespace HandsForMobileAR.CoreComponents Assembly Assembly-CSharp.dll Interface for a class that will handle all landmarks feed from ML model public interface ILandmarkInterpreter Methods OnNewLandmarksGenerated(List<Vector3>, IImageProvider) This function will by invoked by HandTrackingProvider after new landmark is recived from mediapipe void OnNewLandmarksGenerated(List<Vector3> newLandmarks, IImageProvider imageProvider) Parameters newLandmarks List<Vector3> imageProvider IImageProvider"
+  },
+  "api/HandsForMobileAR.CoreComponents.html": {
+    "href": "api/HandsForMobileAR.CoreComponents.html",
+    "title": "Namespace HandsForMobileAR.CoreComponents | HandsForMobileAR",
+    "summary": "Namespace HandsForMobileAR.CoreComponents Classes HandTrackingProvider Core class that handles all Mediapipe related logic Interfaces IDepthModifier Interface for a class whose main goal is to transform normalized hand landmarks into world coordinates IGestureInterpreter Interface for a class that will handle all gesture feed from ML model IImageProvider Interface for a class that will provide image feed for mediapipe model ILandmarkInterpreter Interface for a class that will handle all landmarks feed from ML model Enums HandTrackingProvider.ModelMode Mediapipe model options"
+  },
+  "api/HandsForMobileAR.DefaultComponents.CameraDepthModifier.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.CameraDepthModifier.html",
+    "title": "Class CameraDepthModifier | HandsForMobileAR",
+    "summary": "Class CameraDepthModifier Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll This class goal is to convert normalized landmarks into world-position. It hardly depend on CameraImageProvider public class CameraDepthModifier : MonoBehaviour, IDepthModifier Inheritance object Object Component Behaviour MonoBehaviour CameraDepthModifier Implements IDepthModifier Methods Calibrate(Vector3[]) public void Calibrate(Vector3[] landmarks) Parameters landmarks Vector3[] Process(Vector3[], IImageProvider) Converts normalized landmarks into world-position public void Process(Vector3[] landmarks, IImageProvider imageProvider) Parameters landmarks Vector3[] Normalized landmarks imageProvider IImageProvider Image provider that was source of image that was used to get landmarks"
+  },
+  "api/HandsForMobileAR.DefaultComponents.CameraImageProvider.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.CameraImageProvider.html",
+    "title": "Class CameraImageProvider | HandsForMobileAR",
+    "summary": "Class CameraImageProvider Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll This class goal is to provide image feed to HandTrackingProvider public class CameraImageProvider : MonoBehaviour, IImageProvider Inheritance object Object Component Behaviour MonoBehaviour CameraImageProvider Implements IImageProvider Constructors CameraImageProvider(ARCameraManager) public CameraImageProvider(ARCameraManager manager) Parameters manager ARCameraManager Methods GetCameraResolution() public Vector2Int GetCameraResolution() Returns Vector2Int GetScaledCameraResolution() This function calculates resolution of scaled camera feed public Vector2Int GetScaledCameraResolution() Returns Vector2Int GetScreenResolution() public Vector2Int GetScreenResolution() Returns Vector2Int TryGetLastImage(out Texture2D) Via this function HandTrackingProvider will get image feed for mediapipe public bool TryGetLastImage(out Texture2D image) Parameters image Texture2D Returns bool"
+  },
+  "api/HandsForMobileAR.DefaultComponents.DefaultPoseNames.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.DefaultPoseNames.html",
+    "title": "Enum DefaultPoseNames | HandsForMobileAR",
+    "summary": "Enum DefaultPoseNames Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public enum DefaultPoseNames Fields Closed_Fist = 1 ILoveYou = 7 None = 0 Open_Palm = 2 Pointing_Up = 3 Thumb_Down = 4 Thumb_Up = 5 Victory = 6"
+  },
+  "api/HandsForMobileAR.DefaultComponents.EventType.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.EventType.html",
+    "title": "Enum EventType | HandsForMobileAR",
+    "summary": "Enum EventType Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public enum EventType Fields OnPoseCanceled = 2 OnPoseDetected = 1 OnPoseDetectionStart = 0 OnPoseLost = 3"
+  },
+  "api/HandsForMobileAR.DefaultComponents.IDetectablePose.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.IDetectablePose.html",
+    "title": "Interface IDetectablePose | HandsForMobileAR",
+    "summary": "Interface IDetectablePose Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public interface IDetectablePose Properties PoseName string PoseName { get; } Property Value string Methods Check(Vector3[], string) bool Check(Vector3[] landmarks, string name) Parameters landmarks Vector3[] name string Returns bool GetActivationTimerNormalized() float GetActivationTimerNormalized() Returns float Pause() void Pause() Resume() void Resume() Tick(float) void Tick(float dt) Parameters dt float Events OnPoseCanceled event EventHandler OnPoseCanceled Event Type EventHandler OnPoseDetected event EventHandler OnPoseDetected Event Type EventHandler OnPoseDetectionStart event EventHandler OnPoseDetectionStart Event Type EventHandler OnPoseLost event EventHandler OnPoseLost Event Type EventHandler"
+  },
+  "api/HandsForMobileAR.DefaultComponents.JitterFilter.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.JitterFilter.html",
+    "title": "Class JitterFilter | HandsForMobileAR",
+    "summary": "Class JitterFilter Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public class JitterFilter Inheritance object JitterFilter Constructors JitterFilter(float) public JitterFilter(float smoothingFactor = 0.2) Parameters smoothingFactor float Methods Filter(Vector3[]) public Vector3[] Filter(Vector3[] rawLandmarks) Parameters rawLandmarks Vector3[] Returns Vector3[]"
+  },
+  "api/HandsForMobileAR.DefaultComponents.PoseDetectBus.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.PoseDetectBus.html",
+    "title": "Class PoseDetectBus | HandsForMobileAR",
+    "summary": "Class PoseDetectBus Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public class PoseDetectBus : MonoBehaviour, IGestureInterpreter Inheritance object Object Component Behaviour MonoBehaviour PoseDetectBus Implements IGestureInterpreter Methods GetPoseDetectTimerNormalized(string) public float GetPoseDetectTimerNormalized(string poseName) Parameters poseName string Returns float OnNewGestureGenerated(List<Vector3>, string) This function will by invoked by HandTrackingProvider after new landmark and gesturename recived from mediapipe public void OnNewGestureGenerated(List<Vector3> newLandmarks, string detectedGestureName) Parameters newLandmarks List<Vector3> detectedGestureName string RegisterPose(string, IDetectablePose) public void RegisterPose(string poseName, IDetectablePose pose) Parameters poseName string pose IDetectablePose SubscribeOnPoseDetected(EventType, string, UnityAction) public void SubscribeOnPoseDetected(EventType eventType, string poseName, UnityAction action) Parameters eventType EventType poseName string action UnityAction UnRegisterPose(string) public void UnRegisterPose(string poseName) Parameters poseName string UnSubscribeOnPoseDetected(EventType, string, Action) public void UnSubscribeOnPoseDetected(EventType eventType, string poseName, Action action) Parameters eventType EventType poseName string action Action"
+  },
+  "api/HandsForMobileAR.DefaultComponents.SimplePose.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.SimplePose.html",
+    "title": "Class SimplePose | HandsForMobileAR",
+    "summary": "Class SimplePose Namespace HandsForMobileAR.DefaultComponents Assembly Assembly-CSharp.dll public class SimplePose : IDetectablePose Inheritance object SimplePose Implements IDetectablePose Constructors SimplePose(string) public SimplePose(string poseName) Parameters poseName string Properties IsDetected public bool IsDetected { get; } Property Value bool IsDetecting public bool IsDetecting { get; } Property Value bool IsPaused public bool IsPaused { get; } Property Value bool PoseName public string PoseName { get; } Property Value string Methods Check(Vector3[], string) public bool Check(Vector3[] landmarks, string name) Parameters landmarks Vector3[] name string Returns bool GetActivationTimerNormalized() public float GetActivationTimerNormalized() Returns float Pause() public void Pause() Resume() public void Resume() Tick(float) public void Tick(float dt) Parameters dt float Events OnPoseCanceled public event EventHandler OnPoseCanceled Event Type EventHandler OnPoseDetected public event EventHandler OnPoseDetected Event Type EventHandler OnPoseDetectionStart public event EventHandler OnPoseDetectionStart Event Type EventHandler OnPoseLost public event EventHandler OnPoseLost Event Type EventHandler"
+  },
+  "api/HandsForMobileAR.DefaultComponents.html": {
+    "href": "api/HandsForMobileAR.DefaultComponents.html",
+    "title": "Namespace HandsForMobileAR.DefaultComponents | HandsForMobileAR",
+    "summary": "Namespace HandsForMobileAR.DefaultComponents Classes CameraDepthModifier This class goal is to convert normalized landmarks into world-position. It hardly depend on CameraImageProvider CameraImageProvider This class goal is to provide image feed to HandTrackingProvider JitterFilter PoseDetectBus SimplePose Interfaces IDetectablePose Enums DefaultPoseNames EventType"
+  },
+  "api/HandsForMobileAR.DrawerSample.ColorButton.html": {
+    "href": "api/HandsForMobileAR.DrawerSample.ColorButton.html",
+    "title": "Class ColorButton | HandsForMobileAR",
+    "summary": "Class ColorButton Namespace HandsForMobileAR.DrawerSample Assembly Assembly-CSharp.dll public class ColorButton : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour ColorButton Fields Color [SerializeField] public Color Color Field Value Color"
+  },
+  "api/HandsForMobileAR.DrawerSample.ColorPicker.html": {
+    "href": "api/HandsForMobileAR.DrawerSample.ColorPicker.html",
+    "title": "Class ColorPicker | HandsForMobileAR",
+    "summary": "Class ColorPicker Namespace HandsForMobileAR.DrawerSample Assembly Assembly-CSharp.dll public class ColorPicker : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour ColorPicker"
+  },
+  "api/HandsForMobileAR.DrawerSample.TouchFinger.html": {
+    "href": "api/HandsForMobileAR.DrawerSample.TouchFinger.html",
+    "title": "Class TouchFinger | HandsForMobileAR",
+    "summary": "Class TouchFinger Namespace HandsForMobileAR.DrawerSample Assembly Assembly-CSharp.dll public class TouchFinger : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour TouchFinger Fields OnColorButtonTouched public UnityEvent<Color> OnColorButtonTouched Field Value UnityEvent<Color> Methods OnTriggerEnter(Collider) public void OnTriggerEnter(Collider collider) Parameters collider Collider"
+  },
+  "api/HandsForMobileAR.DrawerSample.TubeDrawer.html": {
+    "href": "api/HandsForMobileAR.DrawerSample.TubeDrawer.html",
+    "title": "Class TubeDrawer | HandsForMobileAR",
+    "summary": "Class TubeDrawer Namespace HandsForMobileAR.DrawerSample Assembly Assembly-CSharp.dll [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))] public class TubeDrawer : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour TubeDrawer Methods SetBrushColor(Color) public void SetBrushColor(Color color) Parameters color Color"
+  },
+  "api/HandsForMobileAR.DrawerSample.html": {
+    "href": "api/HandsForMobileAR.DrawerSample.html",
+    "title": "Namespace HandsForMobileAR.DrawerSample | HandsForMobileAR",
+    "summary": "Namespace HandsForMobileAR.DrawerSample Classes ColorButton ColorPicker TouchFinger TubeDrawer"
+  },
+  "api/HandsForMobileAR.ExtraComponents.GestureControls.html": {
+    "href": "api/HandsForMobileAR.ExtraComponents.GestureControls.html",
+    "title": "Class GestureControls | HandsForMobileAR",
+    "summary": "Class GestureControls Namespace HandsForMobileAR.ExtraComponents Assembly Assembly-CSharp.dll public class GestureControls : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour GestureControls Methods OnVictoryDetected() public void OnVictoryDetected()"
+  },
+  "api/HandsForMobileAR.ExtraComponents.GestureVisualizerUI.html": {
+    "href": "api/HandsForMobileAR.ExtraComponents.GestureVisualizerUI.html",
+    "title": "Class GestureVisualizerUI | HandsForMobileAR",
+    "summary": "Class GestureVisualizerUI Namespace HandsForMobileAR.ExtraComponents Assembly Assembly-CSharp.dll public class GestureVisualizerUI : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour GestureVisualizerUI"
+  },
+  "api/HandsForMobileAR.ExtraComponents.HandVisualizer.html": {
+    "href": "api/HandsForMobileAR.ExtraComponents.HandVisualizer.html",
+    "title": "Class HandVisualizer | HandsForMobileAR",
+    "summary": "Class HandVisualizer Namespace HandsForMobileAR.ExtraComponents Assembly Assembly-CSharp.dll public class HandVisualizer : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour HandVisualizer Methods SendNewLandMarks(Vector3[]) public void SendNewLandMarks(Vector3[] landmarkVectors) Parameters landmarkVectors Vector3[]"
+  },
+  "api/HandsForMobileAR.ExtraComponents.VrMode.html": {
+    "href": "api/HandsForMobileAR.ExtraComponents.VrMode.html",
+    "title": "Class VrMode | HandsForMobileAR",
+    "summary": "Class VrMode Namespace HandsForMobileAR.ExtraComponents Assembly Assembly-CSharp.dll public class VrMode : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour VrMode Methods ChangeMode() public void ChangeMode() SetEyeStep(float) public void SetEyeStep(float value) Parameters value float"
+  },
+  "api/HandsForMobileAR.ExtraComponents.html": {
+    "href": "api/HandsForMobileAR.ExtraComponents.html",
+    "title": "Namespace HandsForMobileAR.ExtraComponents | HandsForMobileAR",
+    "summary": "Namespace HandsForMobileAR.ExtraComponents Classes GestureControls GestureVisualizerUI HandVisualizer VrMode"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.ButtonTriger.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.ButtonTriger.html",
+    "title": "Class ButtonTriger | HandsForMobileAR",
+    "summary": "Class ButtonTriger Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class ButtonTriger : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour ButtonTriger"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.GestureControlPuzzlesTMP.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.GestureControlPuzzlesTMP.html",
+    "title": "Class GestureControlPuzzlesTMP | HandsForMobileAR",
+    "summary": "Class GestureControlPuzzlesTMP Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class GestureControlPuzzlesTMP : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour GestureControlPuzzlesTMP"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.PickPose.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.PickPose.html",
+    "title": "Class PickPose | HandsForMobileAR",
+    "summary": "Class PickPose Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class PickPose : IDetectablePose Inheritance object PickPose Implements IDetectablePose Properties IsDetected public bool IsDetected { get; } Property Value bool IsDetecting public bool IsDetecting { get; } Property Value bool IsPaused public bool IsPaused { get; } Property Value bool PoseName public string PoseName { get; } Property Value string Methods Check(Vector3[], string) public bool Check(Vector3[] landmarks, string name) Parameters landmarks Vector3[] name string Returns bool GetActivationTimerNormalized() public float GetActivationTimerNormalized() Returns float Pause() public void Pause() Resume() public void Resume() Tick(float) public void Tick(float dt) Parameters dt float Events OnPoseCanceled public event EventHandler OnPoseCanceled Event Type EventHandler OnPoseDetected public event EventHandler OnPoseDetected Event Type EventHandler OnPoseDetectionStart public event EventHandler OnPoseDetectionStart Event Type EventHandler OnPoseLost public event EventHandler OnPoseLost Event Type EventHandler"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.PuzzlePeace.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.PuzzlePeace.html",
+    "title": "Class PuzzlePeace | HandsForMobileAR",
+    "summary": "Class PuzzlePeace Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class PuzzlePeace : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour PuzzlePeace Methods ResetPosition() public void ResetPosition()"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.SnapPoint.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPoint.html",
+    "title": "Class SnapPoint | HandsForMobileAR",
+    "summary": "Class SnapPoint Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class SnapPoint : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour SnapPoint Methods Hide() public void Hide() Show() public void Show() Snap(Transform) public void Snap(Transform snapTo) Parameters snapTo Transform UnSnap() public void UnSnap() Events OnGrabbed public event EventHandler<Transform> OnGrabbed Event Type EventHandler<Transform> OnReleased public event EventHandler OnReleased Event Type EventHandler"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointController.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointController.html",
+    "title": "Class SnapPointController | HandsForMobileAR",
+    "summary": "Class SnapPointController Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class SnapPointController : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour SnapPointController Properties IsGrabbed public bool IsGrabbed { get; } Property Value bool Methods OnSnapGrabbed(object, Transform) public void OnSnapGrabbed(object sender, Transform snapTo) Parameters sender object snapTo Transform OnSnapReleased(object, EventArgs) public void OnSnapReleased(object sender, EventArgs args) Parameters sender object args EventArgs SubscribeSnapPoint(SnapPoint) public void SubscribeSnapPoint(SnapPoint point) Parameters point SnapPoint UnSubscribeSnapPoint(SnapPoint) public void UnSubscribeSnapPoint(SnapPoint point) Parameters point SnapPoint Events OnPointGrabbed public event EventHandler OnPointGrabbed Event Type EventHandler OnPointReleased public event EventHandler OnPointReleased Event Type EventHandler"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointGrabber.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.SnapPointGrabber.html",
+    "title": "Class SnapPointGrabber | HandsForMobileAR",
+    "summary": "Class SnapPointGrabber Namespace HandsForMobileAR.PuzzleSampleComponents Assembly Assembly-CSharp.dll public class SnapPointGrabber : MonoBehaviour Inheritance object Object Component Behaviour MonoBehaviour SnapPointGrabber"
+  },
+  "api/HandsForMobileAR.PuzzleSampleComponents.html": {
+    "href": "api/HandsForMobileAR.PuzzleSampleComponents.html",
+    "title": "Namespace HandsForMobileAR.PuzzleSampleComponents | HandsForMobileAR",
+    "summary": "Namespace HandsForMobileAR.PuzzleSampleComponents Classes ButtonTriger GestureControlPuzzlesTMP PickPose PuzzlePeace SnapPoint SnapPointController SnapPointGrabber"
+  },
+  "docs/Walkthrough.html": {
+    "href": "docs/Walkthrough.html",
+    "title": "Walkthrough | HandsForMobileAR",
+    "summary": "Walkthrough Soon here will be walkthrough guide that you can use as learning resource. It is currently available as .docx file here."
+  },
+  "index.html": {
+    "href": "index.html",
+    "title": "Hello everyone!!! | HandsForMobileAR",
+    "summary": "Hello everyone!!! This is documentation site for open-source project - HandsForMobileAR. If you have any questions, checkout README.md at the source repo."
+  }
+}
