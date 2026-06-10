@@ -48,6 +48,7 @@ namespace HandsForMobileAR
                     landmarks[i] = Camera.main.ScreenToWorldPoint(screenPoint);
                 }
             }
+
             private float CalculateHandSize(Vector3[] landmarks)
             {
                 float size = 0;

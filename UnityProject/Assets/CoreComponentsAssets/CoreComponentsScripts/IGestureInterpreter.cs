@@ -5,6 +5,9 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
+        /// <summary>
+        /// Interface for a class that will handle all gesture feed from ML model
+        /// </summary>
         public interface IGestureInterpreter
         {
             /// <summary>

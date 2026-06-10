@@ -4,6 +4,9 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
+        /// <summary>
+        /// Interface for a class whose main goal is to transform normalized hand landmarks into world coordinates
+        /// </summary>
         public interface IDepthModifier
         {
             /// <summary>

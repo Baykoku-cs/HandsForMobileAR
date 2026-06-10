@@ -4,6 +4,9 @@ namespace HandsForMobileAR
 {
     namespace CoreComponents
     {
+        /// <summary>
+        /// Interface for a class that will provide image feed for mediapipe model
+        /// </summary>
         public interface IImageProvider
         {
             /// <summary>
