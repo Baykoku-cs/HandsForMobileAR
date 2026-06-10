@@ -11,6 +11,9 @@ namespace HandsForMobileAR
 {
     namespace DefaultComponents
     {
+        /// <summary>
+        /// This class goal is to provide image feed to HandTrackingProvider
+        /// </summary>
         public class CameraImageProvider : MonoBehaviour, IImageProvider
         {
             [SerializeField] private ARCameraManager _manager;
@@ -30,6 +33,10 @@ namespace HandsForMobileAR
             }
             public Vector2Int GetScreenResolution() => new Vector2Int(Screen.width, Screen.height);
             public Vector2Int GetCameraResolution() => new Vector2Int(_conversionParams.Value.outputDimensions.x, _conversionParams.Value.outputDimensions.y);
+            
+            /// <summary>
+            /// This function calculates resolution of scaled camera feed
+            /// </summary>
             public Vector2Int GetScaledCameraResolution()
             {
                 var widthScale = (float)Screen.width / _conversionParams.Value.outputDimensions.x;

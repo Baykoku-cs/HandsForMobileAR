@@ -5,6 +5,10 @@ namespace HandsForMobileAR
 {
     namespace DefaultComponents
     {
+        /// <summary>
+        /// This class goal is to convert normalized landmarks into world-position.
+        /// It hardly depend on CameraImageProvider
+        /// </summary>
         public class CameraDepthModifier : MonoBehaviour, IDepthModifier
         {
             [SerializeField] private LandmarkInterpreter _landmarkInterpreter;
